@@ -1,6 +1,6 @@
 # chrisdigity/skills
 
-Engineering skills for AI coding agents, forked from [mattpocock/skills](https://github.com/mattpocock/skills) and restructured so the `docs/` directory carries the whole agent workflow (tracker, specs, glossary, ADRs, research, rejected-request knowledge base). The fork is maintained independently: upstream changes are imported deliberately, and nothing is contributed back.
+Engineering skills for AI coding agents, adapted from [mattpocock/skills](https://github.com/mattpocock/skills) to suit alternate preferences. The `docs/` directory carries the whole agent workflow (tracker, specs, glossary, ADRs, research, rejected-request knowledge base), committed alongside the skills.
 
 ## Install
 
@@ -23,13 +23,13 @@ Each skill folder holds its SKILL.md plus its reference files, scripts, and agen
 
 ## Import log
 
-Derivation from upstream is one-directional: Matt Pocock's updates are imported into this fork periodically, never contributed back. Every deliberate divergence from upstream is recorded here with its reason, and every skill edit in this fork appends an entry, so each import stays a deliberate act.
+Derivation from upstream is one-directional: Matt Pocock's updates are imported here periodically, never contributed back. Every deliberate divergence from upstream is recorded in this log with its reason, and every skill edit appends an entry, so each import stays a deliberate act.
 
-- 2026-11-12: Repository created as a one-directional fork of mattpocock/skills, imported at upstream commit 4ae2317ddb22b046e26455e4f9c9b3aaaf62212d. Upstream updates are imported deliberately; nothing is contributed back.
-- 2026-11-12: All 26 carried skills copied verbatim; skill names kept from upstream so upstream changes stay visible during imports. The only skill not carried is setup-matt-pocock-skills: it is superseded by setup-engineering-skills, a replacement configured for this fork's docs/ layout, currently being built (see the tracker under docs/tasks/).
+- 2026-11-12: Repository created as a one-directional derivation of mattpocock/skills, imported at upstream commit 4ae2317ddb22b046e26455e4f9c9b3aaaf62212d. Upstream updates are imported deliberately; nothing is contributed back.
+- 2026-11-12: All 26 carried skills copied verbatim; skill names kept from upstream so upstream changes stay visible during imports. The only skill not carried is setup-matt-pocock-skills: it is superseded by setup-engineering-skills, a replacement configured for this repository's docs/ layout, currently being built (see the tracker under docs/tasks/).
 - 2026-11-12: Upstream layout `skills/<category>/<name>/` flattened to `skills/<name>/`, and upstream's category READMEs not carried. The skills CLI discovers skills in `skills/` up to three levels deep, so the flat layout installs the same way upstream's catalog layout does.
 - 2026-11-12: Router renamed and rewritten: upstream's `ask-matt` is now `ask-skills`, the only renamed skill. Same orientation role, rewritten for this fork's flow: the map routes through the tracker at `docs/tasks/` (feature specs and tickets), promotion close-out by distillation into `docs/specs/`, `docs/adr/`, and `docs/glossary.md`, the rejected-request KB at `docs/out-of-scope/`, research at `docs/research/`, and the `setup-engineering-skills` / `update-engineering-skills` precondition pair. References to a root GLOSSARY.md and `.scratch/` are gone; PHASE-BOUNDARIES.md carried unchanged.
 
 ## License
 
-The carried skills are MIT licensed by Matt Pocock; the LICENSE file carries that license unchanged.
+This repository is MIT licensed; see [LICENSE](LICENSE). The copyright line credits Matt Pocock, whose skill set this repository adapts.
