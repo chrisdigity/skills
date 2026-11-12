@@ -1,0 +1,5 @@
+interface:
+  display_name: "Update Engineering Skills"
+  short_description: "Refresh skills and migrate managed config"
+policy:
+  allow_implicit_invocation: false
