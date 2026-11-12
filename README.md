@@ -47,6 +47,7 @@ Derivation from upstream is one-directional: Matt Pocock's updates are imported 
 - 2026-11-13: update-engineering-skills: the preservation guarantee names the steering file's two managed blocks (the `## Agent skills` block and the writing-standard block), matching the conflict resolution that extends the agent-skills block; ADR 0003 records the same ownership line.
 - 2026-11-13: to-spec: a spaced hyphen doing dash work on the rewritten publish-target line replaced with a semicolon (the writing standard's dash rule).
 - 2026-11-13: ask-skills: two British spellings normalized to American ("behaviour" to "behavior"), matching the fork's spelling norm.
+- 2026-11-13: The skills-fork build completed and its tracker directory was removed under the promotion close-out it defines. The docs/ convention is distilled into three subsystem specs (skills distribution, project configuration, work lifecycle), the glossary, and ADRs 0003 and 0004; code-review ran over the tickets' integration with the promotion-consistency check exercised on the real diff. A captured request to move this import log out of the README sits in the tracker under docs/tasks/import-log-home/.
 
 ## License
 
