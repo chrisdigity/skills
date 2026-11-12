@@ -58,7 +58,7 @@ Exception: if a prototype produced a snippet that encodes a decision more precis
 
 ## Cross-feature dependencies
 
-Dependencies this feature has on tracked-but-unpromoted features: features whose directories still sit under the tracker. For each, name the feature by its tracker path (a deliberate exception to the no-file-paths rule above, since the path is how ticketing wires the edge), what this feature needs from it, and what happens if it does not land. Write "None" when there are none. Ticketing turns each listed dependency into a ticket blocking edge; a blocker in another feature directory is referenced by its tracker path.
+Dependencies this feature has on tracked-but-unpromoted features: features whose directories still sit under the tracker. For each, name the feature by its tracker path (a deliberate exception to the no-file-paths rule above, since the path is how ticketing wires the edge), what this feature needs from it, and what happens if it does not land. Write "None" when there are none. When the work is ticketed, wire each dependency listed here as a ticket blocking edge, and reference a blocker in another feature directory by its tracker path.
 
 ## Testing Decisions
 
