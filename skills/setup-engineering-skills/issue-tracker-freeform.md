@@ -1,4 +1,4 @@
-# Issue tracker: Freeform
+# Issue tracker: freeform
 
 Issues for this repo are tracked by the workflow described below, in the user's own words. The skills follow this description literally.
 

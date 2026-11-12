@@ -59,7 +59,7 @@ If it is installed, ask exactly one question:
 
 The defaults are the five canonical roles, each label string equal to its name: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`. On **yes**, write them as-is. Only if the user says no, usually because their tracker already uses other names (e.g. `bug:triage` for `needs-triage`), collect the overrides so `triage` applies existing labels instead of creating duplicates.
 
-**Section C: Domain docs.** Default to **single-context** (one `docs/glossary.md` + `docs/adr/`). This fits almost every repo; write it without asking.
+**Section C: Domain docs.** Default to **single-context** (one `docs/glossary.md` + `docs/adr/`). This fits almost every repo; write it without asking. If the user asks for multi-context directly, honor that request.
 
 Offer **multi-context** (a root `docs/glossary-map.md` pointing at per-context glossaries at `src/<context>/docs/glossary.md`) only when exploration found monorepo signals. Then confirm which layout they want.
 
