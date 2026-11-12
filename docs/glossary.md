@@ -2,6 +2,17 @@
 
 Language for this repository: a fork of Matt Pocock's engineering skills, restructured so the docs/ directory carries the whole agent workflow.
 
+## Subsystems
+
+**skills distribution**:
+The subsystem that carries the skill set from upstream through this fork into installed projects: packaging and layout, install through the skills CLI, and the import log governing upstream derivation. Spec: docs/specs/skills-distribution.md.
+
+**project configuration**:
+The subsystem that configures a repository to run the workflow and keeps that configuration current: the managed artifacts and steering-file blocks that setup-engineering-skills writes and update-engineering-skills migrates. Spec: docs/specs/project-configuration.md.
+
+**work lifecycle**:
+The subsystem that moves work from proposal to durable documentation: the tracker, promotion and distillation, code review, triage, and research. Spec: docs/specs/work-lifecycle.md.
+
 ## Work in the tracker
 
 **tracker**:
@@ -15,6 +26,9 @@ _Avoid_: wip spec, spec
 **ticket**:
 One tracer-bullet slice of a feature, with declared blocking edges, at docs/tasks/<feature>/issues/NN-slug.md.
 _Avoid_: task, issue
+
+**wayfinding**:
+The map-and-ticket system wayfinder runs over the tracker: a map file with one child ticket per question, claimed and resolved by status, with the frontier listing open, unblocked, unclaimed tickets.
 
 **promotion**:
 The close-out step that distills a completed feature into the durable docs; part of the feature's definition of done, checked by code-review.
@@ -41,10 +55,16 @@ Dedup records at docs/out-of-scope/: one file per rejected enhancement concept w
 **managed artifact**:
 A file update-engineering-skills owns and regenerates: docs/agents/*.md and the writing-standard block in the steering file; everything else under docs/ is unmanaged and preserved as-is.
 
+**seed**:
+The template file in the setup-engineering-skills folder that a managed artifact is generated from; update classifies each managed artifact against the latest seed and regenerates byte-identical copies of it.
+
 ## Distribution
 
 **upstream**:
 Matt Pocock's original skill set, from which these skills derive; his updates are imported into this fork periodically, never the reverse. Divergences are recorded in the fork's README so each import stays deliberate.
+
+**import log**:
+The append-only record of every deliberate divergence from upstream and every edit to a carried skill, one dated entry each with its reason; it is what makes each upstream import a deliberate act rather than a silent overwrite.
 
 **fork**:
 A derived, independently maintained copy of upstream; updates flow from upstream into it, never back. This repository is the fork, installed into projects with npx skills add chrisdigity/skills.
