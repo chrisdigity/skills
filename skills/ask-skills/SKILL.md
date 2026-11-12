@@ -55,7 +55,7 @@ A starting situation that generates work, then merges onto the main flow.
 
 ## Wayfinder
 
-**A huge, foggy effort: a greenfield project or a huge feature build, too big for one session** -> **`/wayfinder`**, the most cognitively demanding flow here. When the way from here to the destination isn't visible yet, it charts a **shared map** of **decision tickets** on the tracker at docs/tasks/<effort>/map.md and resolves them one at a time, producing **decisions, not deliverables**, until the fog is pushed back and the way is clear. Where **`/grill-with-docs`** sharpens an idea you can hold in one session, wayfinder is for the idea you can't, and it's slower and denser, so save it for exactly that, never a well-scoped feature.
+**A huge, foggy effort: a greenfield project or a huge feature build, too big for one session** -> **`/wayfinder`**, the most cognitively demanding flow here. When the way from here to the destination isn't visible yet, it charts a **shared map** of **decision tickets** (questions, not build slices) on the tracker at docs/tasks/<effort>/map.md and resolves them one at a time, producing **decisions, not deliverables**, until the fog is pushed back and the way is clear. Where **`/grill-with-docs`** sharpens an idea you can hold in one session, wayfinder is for the idea you can't, and it's slower and denser, so save it for exactly that, never a well-scoped feature.
 
 When the map clears, **it hands off, it doesn't build**: merge onto the main flow at **`/to-spec`**, which collapses the map's linked decisions into a buildable feature spec, then `/to-tickets` and `/implement` as usual. Looping the map straight into `/implement` skips that collapse and throws the linked detail away, so go straight to `/implement` only when the effort turned out genuinely small.
 
@@ -103,4 +103,4 @@ Off the main flow entirely.
 Two skills keep the flow configured:
 
 - **`/setup-engineering-skills`**: run before your first engineering flow in a project. It configures what the other skills read: the tracker, triage labels, the domain-docs variant, and the **managed artifacts** (docs/agents/*.md and the writing-standard block in the steering file). Hosted trackers work too; the local tracker at docs/tasks/ is the default.
-- **`/update-engineering-skills`**: the maintenance half of the pair. It delegates skill-file refresh to the skills CLI, then migrates the managed artifacts: present a plan, confirm before any write, regenerate, and leave unmanaged content under docs/ untouched.
+- **`/update-engineering-skills`**: the maintenance half of the pair. It delegates skill-file refresh to the skills CLI, then migrates the managed artifacts: present a plan, confirm before any write, regenerate, and leave unmanaged content under docs/ untouched; when an update would overwrite custom content, it raises the conflict instead.
