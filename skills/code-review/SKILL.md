@@ -28,8 +28,11 @@ Look for the originating spec, in this order:
 
 1. Issue references in the commit messages (`#123`, `Closes #45`, GitLab `!67`, etc.), fetched via the workflow in the tracker doc.
 2. A path the user passed as an argument.
-3. A spec file under `docs/`, `specs/`, or `.scratch/` matching the branch name or feature.
-4. If nothing is found, ask the user where the spec is. If they say there isn't one, the **Spec** sub-agent will skip and report "no spec available".
+3. A feature spec under the tracker path the tracker doc defines, `docs/tasks/<feature>/spec.md` by default, matching the branch name or feature.
+4. A subsystem spec at `docs/specs/<subsystem>.md` covering the behavior the diff changes, when no feature spec matches: promotion removes a feature's directory once it lands, so a promoted change's only remaining spec source is the subsystem spec.
+5. If nothing is found, ask the user where the spec is. If they say there isn't one, the **Spec** sub-agent will skip and report "no spec available".
+
+Whichever spec wins, also list the subsystem specs under `docs/specs/` whose behavior the diff touches and hand their paths to the Spec sub-agent: the promotion-consistency check compares the diff against them even when the originating spec is a feature spec.
 
 ### 3. Identify the standards sources
 
@@ -69,7 +72,8 @@ Issue both sub-agent calls together, in the foreground, and aggregate the report
 
 - The diff command and commit list.
 - The path or fetched contents of the spec.
-- The brief: "Report: (a) requirements the spec asked for that are missing or partial; (b) behaviour in the diff that wasn't asked for (scope creep); (c) requirements that look implemented but where the implementation looks wrong. Quote the spec line for each finding. Under 400 words."
+- The paths of the `docs/specs/` subsystem specs whose behavior the diff touches, when any exist.
+- The brief: "Report: (a) requirements the spec asked for that are missing or partial; (b) behavior in the diff that wasn't asked for (scope creep); (c) requirements that look implemented but where the implementation looks wrong; (d) promotion consistency: where the diff changes behavior a `docs/specs/` subsystem spec describes, the diff must carry its promotion, meaning the subsystem spec updated in the same change; flag a behavior change that leaves the subsystem spec stale. Quote the spec line for each finding. Under 400 words."
 
 If the spec is missing, skip the Spec sub-agent and note this in the final report.
 
