@@ -1,6 +1,6 @@
 # Setup and update own the managed artifacts
 
-The per-topic configuration files under docs/agents/ and the writing-standard block in the steering file are owned by setup-engineering-skills and update-engineering-skills; everything else under docs/ is unmanaged and preserved as-is. The ownership line has to be unambiguous because update regenerates owned files byte-identical from the seed templates and replaces the block in place: a file with unclear ownership is either silently overwritten, losing the user's work, or silently skipped, drifting from the seed it is supposed to match. Custom extensions therefore belong in unmanaged files.
+The per-topic configuration files under docs/agents/ and the two steering-file blocks setup writes (the agent-skills block and the writing-standard block) are owned by setup-engineering-skills and update-engineering-skills; everything else under docs/ is unmanaged and preserved as-is. The ownership line has to be unambiguous because update regenerates owned files byte-identical from the seed templates, replaces the writing-standard block in place, and extends the agent-skills block when a new managed artifact needs a pointer: a file with unclear ownership is either silently overwritten, losing the user's work, or silently skipped, drifting from the seed it is supposed to match. Custom extensions therefore belong in unmanaged files.
 
 ## Consequences
 

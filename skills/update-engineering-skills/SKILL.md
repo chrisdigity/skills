@@ -69,7 +69,7 @@ Present the plan before any write, one line per action:
 - What step 1 did (updated, or already current).
 - Per managed artifact, the action its step 3 classification calls for: regenerate (with the diff), already current, create, preserve, or raise as a conflict.
 - Each conflict and its proposed resolution. A custom file at a managed path is presented side by side with the managed artifact it shadows, and the user picks: keep theirs (the path stays custom and this skill no longer manages it), or adopt the managed artifact (theirs is moved aside first, never deleted). When the latest templates introduce a managed artifact this repo does not have, offer to create it and extend the steering file's `## Agent skills` block to reference it.
-- The preservation guarantee: nothing outside `docs/agents/` and the writing-standard block will be written.
+- The preservation guarantee: nothing outside `docs/agents/` and the steering file's two managed blocks (the `## Agent skills` block and the writing-standard block) will be written.
 
 Wait for an explicit yes. No write happens before it.
 

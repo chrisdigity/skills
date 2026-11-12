@@ -16,7 +16,7 @@ The issue tracker and triage label vocabulary should have been provided to you. 
 
 Check with the user that these seams match their expectations.
 
-3. Write the spec using the template below, then publish it to the tracker path the issue-tracker config defines, `docs/tasks/<feature-slug>/spec.md` by default. Apply the `ready-for-agent` triage label - no need for additional triage.
+3. Write the spec using the template below, then publish it to the tracker path the issue-tracker config defines, `docs/tasks/<feature-slug>/spec.md` by default. Apply the `ready-for-agent` triage label; no need for additional triage.
 
 <spec-template>
 

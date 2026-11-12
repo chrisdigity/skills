@@ -53,7 +53,7 @@ A point-in-time, cited findings file at docs/research/<topic>.md; it is never pr
 Dedup records at docs/out-of-scope/: one file per rejected enhancement concept with its prior requests; triage reads it before evaluating new requests, and an entry that passes the ADR bar graduates to docs/adr/ and leaves the KB.
 
 **managed artifact**:
-A file update-engineering-skills owns and regenerates: docs/agents/*.md and the writing-standard block in the steering file; everything else under docs/ is unmanaged and preserved as-is.
+A file update-engineering-skills owns and regenerates: docs/agents/*.md and the steering file's two managed blocks (the agent-skills block and the writing-standard block); everything else under docs/ is unmanaged and preserved as-is.
 
 **seed**:
 The template file in the setup-engineering-skills folder that a managed artifact is generated from; update classifies each managed artifact against the latest seed and regenerates byte-identical copies of it.

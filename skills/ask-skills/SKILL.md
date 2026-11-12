@@ -29,7 +29,7 @@ The route most work travels. You have an idea and want it built and closed out.
      - **`/implement-spec`** for the whole feature spec in one run. It reads the tickets as a **task graph**, runs implementer subagents across the ready **frontier** in parallel, and lands everything on one **integration branch**. Reach for it when you'd rather orchestrate the build than drive each ticket yourself.
    - **No** -> **`/implement`** right here, in the same context window.
 
-   Either way, the code gets built by driving **`/tdd`** (one red-green slice at a time) and reviewed by **`/code-review`**, a two-axis review (Standards + Spec) of the diff. `/implement` runs both per ticket; `/implement-spec`'s implementers each drive `/tdd`, and it runs one `/code-review` over the integration branch. Reach for **`/tdd`** on its own when you just want to build a concrete behaviour test-first without a feature spec, and **`/code-review`** on its own whenever you want to review a branch or PR against a fixed point.
+   Either way, the code gets built by driving **`/tdd`** (one red-green slice at a time) and reviewed by **`/code-review`**, a two-axis review (Standards + Spec) of the diff. `/implement` runs both per ticket; `/implement-spec`'s implementers each drive `/tdd`, and it runs one `/code-review` over the integration branch. Reach for **`/tdd`** on its own when you just want to build a concrete behavior test-first without a feature spec, and **`/code-review`** on its own whenever you want to review a branch or PR against a fixed point.
 
    A feature build ends with **promotion**: **distillation** of the completed feature into the durable docs. Behavior goes into the matching **subsystem spec** at docs/specs/<subsystem>.md, hard-to-reverse decisions into docs/adr/, new terms into docs/glossary.md; the feature's directory then leaves the tracker, its essence in the durable docs and the rest in git history. `/implement` and `/implement-spec` run this close-out, and `/code-review`'s Spec axis checks that a diff changing spec-described behavior carries its promotion.
 
@@ -70,7 +70,7 @@ Not feature work, just upkeep.
 Two model-invoked references that run *beneath* the other skills, each the single source of truth for its vocabulary. Reach for them directly when the **words**, not the process, are the problem; or let the skills above pull them in.
 
 - **`/domain-modeling`**: sharpen the project's *domain* language: challenge a fuzzy term, resolve an overloaded word ("account" doing three jobs), record a hard-to-reverse decision as an ADR at docs/adr/. It's the active discipline `/grill-with-docs` drives to keep docs/glossary.md a clean glossary; where the files live is the variant described in docs/agents/domain.md.
-- **`/codebase-design`** is the deep-module vocabulary (module, interface, depth, seam, adapter, leverage, locality) for designing a module's *shape*: a lot of behaviour behind a small interface at a clean seam. `/tdd` and `/improve-codebase-architecture` both speak it.
+- **`/codebase-design`** is the deep-module vocabulary (module, interface, depth, seam, adapter, leverage, locality) for designing a module's *shape*: a lot of behavior behind a small interface at a clean seam. `/tdd` and `/improve-codebase-architecture` both speak it.
 
 ## Phase boundaries
 
