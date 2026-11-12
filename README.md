@@ -32,7 +32,7 @@ Derivation from upstream is one-directional: Matt Pocock's updates are imported 
 - 2026-11-12: domain-modeling: the file structure section defers to `docs/agents/domain.md` (defaults: `docs/glossary.md` and `docs/adr/`; multi-context variant: `docs/glossary-map.md` with per-context glossaries at `src/<context>/docs/glossary.md`) instead of inferring from a root GLOSSARY.md or GLOSSARY-MAP.md. GLOSSARY-FORMAT.md carries the same paths and deference; ADR-FORMAT.md points multi-context ADR locations at `docs/agents/domain.md`.
 - 2026-11-12: to-tickets: the local tracker path moved from `.scratch/<feature-slug>/issues/` to the issue-tracker config's path, defaulting to `docs/tasks/<feature-slug>/issues/`, so tickets are committed and follow their branch.
 - 2026-11-12: triage: the rejected-request knowledge base moved from `.out-of-scope/` to `docs/out-of-scope/` so rejections are tracked by git instead of sitting in a gitignored dot-directory; OUT-OF-SCOPE.md and AGENT-BRIEF.md updated to match.
-- 2026-11-12: research: findings save to `docs/research/<topic>.md`, one file per topic, instead of wherever the agent guesses.
+- 2026-11-12: research: findings save to `docs/research/<topic>.md`, one file per topic and dated, instead of wherever the agent guesses; they are point-in-time.
 - 2026-11-12: tdd: the glossary line reads the project's glossary at the location `docs/agents/domain.md` describes, not a root GLOSSARY.md.
 - 2026-11-12: improve-codebase-architecture: the glossary path follows `docs/agents/domain.md`, ADRs stay at `docs/adr/`, and a matching subsystem spec at `docs/specs/` is orientation input for the scan.
 

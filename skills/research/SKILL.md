@@ -9,4 +9,4 @@ Its job:
 
 1. Investigate the question against **primary sources** (official docs, source code, specs, first-party APIs), not a secondary write-up of them. Follow every claim back to the source that owns it.
 2. Write the findings to a single Markdown file, citing each claim's source.
-3. Save it to `docs/research/<topic>.md`, one file per topic (create the directory if it doesn't exist), and say where you saved it.
+3. Save it to `docs/research/<topic>.md`, one file per topic (create the directory if it doesn't exist), date it, and say where you saved it: the findings are point-in-time, so a reader knows to re-verify them before relying on them.

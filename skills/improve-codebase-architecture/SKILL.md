@@ -11,7 +11,7 @@ Surface architectural friction and propose **deepening opportunities**: refactor
 This command is _informed_ by the project's domain model and built on a shared design vocabulary:
 
 - Call the Skill tool with "codebase-design" for the architecture vocabulary (**module**, **interface**, **depth**, **seam**, **adapter**, **leverage**, **locality**) and its principles (the deletion test, "the interface is the test surface", "one adapter = hypothetical seam, two = real"). Use these terms exactly in every suggestion, and don't drift into "component," "service," "API," or "boundary."
-- The domain language in the project's glossary (location described in `docs/agents/domain.md`) gives names to good seams; ADRs in `docs/adr/` record decisions this command should not re-litigate.
+- The domain language in the project's glossary (`docs/agents/domain.md` describes where it lives) gives names to good seams; ADRs in `docs/adr/` record decisions this command should not re-litigate.
 
 ## Process
 
@@ -22,7 +22,7 @@ This command is _informed_ by the project's domain model and built on a shared d
 - If the user named a direction (a module, a subsystem, a pain point), take it, and skip the inference below.
 - Otherwise, walk back a good stretch of the commit history (`git log --oneline`) to find the codebase's hot spots, the files and areas that keep coming up, and let those paths pull your attention first. If the changes are scattered with no clear hot spot, widen the net.
 
-Read the project's domain glossary (`docs/agents/domain.md` describes where it lives) and any ADRs in the area you're touching first. If the area has a subsystem spec at `docs/specs/`, read that too: it records how the subsystem is supposed to behave, so candidates work from intent, not just current code.
+Read the project's domain glossary (`docs/agents/domain.md` describes where it lives) and any ADRs in the area you're touching first. If the area has a subsystem spec at `docs/specs/`, read that too: it records how the subsystem is supposed to behave as of its last promotion, which the current code may not reflect.
 
 Then spawn a sub-agent with a fresh context window to walk the codebase. Don't follow rigid heuristics; explore organically and note where you experience friction:
 
