@@ -1,0 +1,4 @@
+# Dot-prefixed paths stay out of git as a rule; working state belongs in the committed tracker at docs/tasks/.
+.*
+# Except this file itself, so the rule is versioned (without this line, .* matches .gitignore).
+!.gitignore
