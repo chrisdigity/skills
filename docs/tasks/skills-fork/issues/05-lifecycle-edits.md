@@ -4,9 +4,21 @@ What to build: Behavior edits that make the governance model live in the flow. i
 
 Blocked by: 03
 
-Status: ready-for-agent
+Status: resolved
 
-- [ ] implement and implement-spec end with a promotion step whose completion criterion is checkable: specs updated, ADRs offered, glossary updated, tracker entries resolved, feature directory removed.
-- [ ] code-review's spec-source search includes `docs/specs/`, and the Spec brief includes the promotion-consistency check.
-- [ ] to-spec includes the cross-feature dependency rule.
-- [ ] Import log entries for each edited skill.
+- [x] implement and implement-spec end with a promotion step whose completion criterion is checkable: specs updated, ADRs offered, glossary updated, tracker entries resolved, feature directory removed.
+- [x] code-review's spec-source search includes `docs/specs/`, and the Spec brief includes the promotion-consistency check.
+- [x] to-spec includes the cross-feature dependency rule.
+- [x] Import log entries for each edited skill.
+
+## Comments
+
+Completed 2026-11-13, commits f9743e2 and 1d17ce6 on main.
+
+- implement and implement-spec each end with a promotion close-out step (after code-review and the work commit; step 9 in implement-spec, after the draft-PR and ticket-resolution step, before worktree cleanup): distill behavior into the matching subsystem spec at `docs/specs/<subsystem>.md` (created when none covers the subsystem, kebab-case slug from the glossary term, the four settled sections, no feature slugs or proposed-work marks), hard-to-reverse decisions offered as ADRs at `docs/adr/` (written when the user confirms), new terms into the glossary at the location `docs/agents/domain.md` describes, tracker entries resolved the way the issue tracker closes work, and the feature directory removed last with its essence in the durable docs and the rest in git history. The step commits its edits and states the done-when: all five outcomes checkable.
+- code-review: the spec-source search names the tracker's feature spec (`docs/tasks/<feature>/spec.md` by default) and adds `docs/specs/<subsystem>.md` as source 4 for promoted changes, with the mechanism stated (promotion removes the feature directory, so the subsystem spec is the only remaining source); whichever spec wins, the covering `docs/specs/` paths are handed to the Spec sub-agent, whose brief gains finding (d), the promotion-consistency check. The rewrite also drops the stale `.scratch/` entry, a moved location ticket 03 could not fix (code-review was outside its six-skill list) and that this search line could not gain `docs/specs/` without being rewritten.
+- to-spec: exploration checks the tracker's open features for the subsystems being touched (a feature whose directory still sits under the tracker is tracked but unpromoted); the spec template gains a Cross-feature dependencies section (dependency named by its tracker path as a deliberate exception to the no-file-paths rule, what is needed, and what happens if it does not land); and the section ends in an imperative so the future to-tickets run, reading the spec fresh, wires each listed dependency as a ticket blocking edge, cross-directory blockers by tracker path per the tracker doc. The publish target names the tracker path, `docs/tasks/<feature-slug>/spec.md` by default, replacing "the project issue tracker" (the path edits bundled with the rule per the ticket, since both edit the same file).
+- Import log: four README entries, one per edited skill (implement, implement-spec, code-review, to-spec).
+- Verification: seam-based inspection per the spec's testing decisions. Greps confirm the five-outcome done-when line in both implement skills, `docs/specs/` in code-review's search and Spec brief, the Cross-feature dependencies section and tracked-but-unpromoted rule in to-spec, and four dated README entries; no non-ASCII bytes in any added line, and the only non-ASCII remaining in code-review is upstream's carried smell-baseline arrows. The router (ticket 02) already described all of this behavior (its lines on to-spec's dependency surfacing and the promotion close-out), so the skills now match the map.
+- Code-review over 2638b2e...HEAD, two axes, with the promotion-consistency check dogfooded in the Spec brief (vacuously: `docs/specs/` is empty until ticket 07's first promotion). Standards axis: no hard violations; judged and kept, the five-bullet promotion block duplicated across the two implement skills (the ticket's own design: each gains the step, and skills install as standalone folders that cannot reference each other at runtime) and the five-file spread (per-skill structure plus the one-entry-per-skill import log). Spec axis: one partial fixed in 1d17ce6 (the wiring handoff sentence became an imperative addressed to the future ticketing run); judged and kept, the source-3 rewrite (drops the stale `.scratch/` entry; logged) and the "behaviour" to "behavior" normalization on the one rewritten brief line (the rest of the fork uses American spelling).
+- Commits are unsigned (--no-gpg-sign): gpg-agent could not obtain the passphrase from the agent shell and hung signing; the user chose to land unsigned, with re-signing available later via rebase.
