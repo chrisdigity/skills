@@ -39,33 +39,35 @@ Managed artifacts are regenerated from the seed templates in the `setup-engineer
 - `triage-labels.md`: the label mapping
 - `writing-standard.md`: the versioned writing-standard block
 
-If the sibling folder is missing (a partial install), stop and tell the user to reinstall the pair with `npx skills add chrisdigity/skills`. Never regenerate a managed artifact from memory.
+If the sibling folder is missing (a partial install), stop and tell the user to reinstall the pair with `npx skills add chrisdigity/skills`. Never regenerate a managed artifact from memory. When the skills were installed globally, `npx skills list -g` prints the global skills directory this folder lives under.
 
 ### 3. Inventory the managed artifacts
 
 If `docs/agents/` does not exist and no delimited writing-standard block exists in any steering file, setup has never run in this repo: say so and point at `/setup-engineering-skills`; there is nothing to migrate.
 
-Otherwise read:
+Otherwise enumerate every file under `docs/agents/` (the managed contract covers all of it, not just the four paths below), then read:
 
 - `docs/agents/issue-tracker.md`: the tracker type, from its title ("Issue tracker: local markdown" / GitHub / GitLab / freeform). When the steering file's `## Agent skills` block is present, cross-check its `### Issue tracker` one-liner; on a mismatch, surface it in the plan instead of picking one silently.
 - `docs/agents/domain.md`: the variant, from its File structure section. Never switch variants during an update.
 - `docs/agents/triage-labels.md`: present or missing (managed only while the `triage` skill is installed).
 - The steering file (`CLAUDE.md` where that is what exists, else `AGENTS.md`): the delimited writing-standard block and the version in its opening delimiter (`<!-- writing-standard v1: ... -->`). If neither steering file exists, there is nothing to migrate there.
 
-Classify each existing artifact against the latest seed for its path:
+Classify each existing artifact against the latest seed for its path. The seed-to-path mapping comes from the sibling folder's file names: `issue-tracker-*` and `domain-*` are the variants behind `issue-tracker.md` and `domain.md`, `triage-labels.md` targets itself, `writing-standard.md` targets the steering-file block, and any other seed file targets `docs/agents/<seed file name>`, so a seed the current managed set does not know is a newly managed artifact:
 
 - **Matches the seed**: current, nothing to do.
 - **Same shape, different content** (title and section structure match the seed's): a managed artifact that is outdated or hand-edited. The migration regenerates it; show the diff in the plan. For the writing-standard block this overwrite is by design: hand edits to the block are lost, and custom extensions belong in unmanaged files.
-- **Different shape** (its title matches no seed for that path): not setup output. A custom file is sitting at a managed path; raise a conflict (step 4) and never overwrite it.
-- **freeform**: an `issue-tracker.md` written from the freeform seed is never regenerated, whatever it now contains - its workflow text is the user's own words. If the freeform seed changed, present the seed's diff and ask how to proceed.
+- **Different shape** (its title matches no seed for that path): not setup output. A custom file is sitting at a managed path; raise a conflict (step 4) and never overwrite it. This is what catches a custom file shadowing an artifact the latest templates newly manage.
+- **freeform**: an `issue-tracker.md` written from the freeform seed is never regenerated, whatever it now contains; its workflow text is the user's own words. If the freeform seed changed, present the seed's diff and ask how to proceed.
 - **Missing**: offer to create it from the latest seed in the plan.
+
+A file under `docs/agents/` that no seed explains and no classification above fits is unattributable: raise it in the plan and leave it alone unless the user says otherwise.
 
 ### 4. Present the migration plan and confirm
 
 Present the plan before any write, one line per action:
 
 - What step 1 did (updated, or already current).
-- Per managed artifact: regenerate (with the diff), already current, create, or preserve.
+- Per managed artifact, the action its step 3 classification calls for: regenerate (with the diff), already current, create, preserve, or raise as a conflict.
 - Each conflict and its proposed resolution. A custom file at a managed path is presented side by side with the managed artifact it shadows, and the user picks: keep theirs (the path stays custom and this skill no longer manages it), or adopt the managed artifact (theirs is moved aside first, never deleted). When the latest templates introduce a managed artifact this repo does not have, offer to create it and extend the steering file's `## Agent skills` block to reference it.
 - The preservation guarantee: nothing outside `docs/agents/` and the writing-standard block will be written.
 
@@ -82,6 +84,6 @@ Wait for an explicit yes. No write happens before it.
 Report what the CLI refreshed, what migrated, what was preserved, and how each conflict was resolved. Done when all four are checkable:
 
 - `npx skills list` shows no `modified` skills (installed files match the lock's content hashes)
-- Every managed artifact matches its latest seed, or sits under a documented exception (freeform preserved, conflict kept custom)
+- Every managed artifact ends in the state its step 3 classification and the confirmed plan defined: matching its latest seed, or under a documented exception (freeform preserved, conflict kept custom)
 - Unmanaged content untouched: `git status` shows changes only at the expected paths
 - Every conflict raised got an explicit resolution from the user
