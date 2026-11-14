@@ -10,6 +10,9 @@ Default canonical triage labels (`needs-triage`, `needs-info`, `ready-for-agent`
 ### Domain docs
 Single-context: one `docs/glossary.md` and `docs/adr/`. See `docs/agents/domain.md`.
 
+### Git
+Agents never push on their own; a failed git operation is reported to the maintainer before diagnosis. See `docs/agents/git.md`.
+
 ### Research documents
 Research lives under `docs/research/`, one file per topic. Cross-reference files as `docs/research/<topic>` in ADRs, specs, and tickets.
 
