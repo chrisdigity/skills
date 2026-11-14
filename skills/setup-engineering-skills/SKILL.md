@@ -1,6 +1,6 @@
 ---
 name: setup-engineering-skills
-description: "Configure this repo for the engineering skills: set up its issue tracker, triage label vocabulary, domain doc layout, and writing standard. Run once before first use of the other engineering skills."
+description: "Configure this repo for the engineering skills: set up its issue tracker, triage label vocabulary, domain doc layout, git policy, and writing standard. Run once before first use of the other engineering skills."
 disable-model-invocation: true
 ---
 
@@ -11,6 +11,7 @@ Scaffold the per-repo configuration that the engineering skills assume:
 - **Issue tracker**: where issues live (local markdown under `docs/tasks/` by default; GitHub, GitLab, and freeform workflows also supported)
 - **Triage labels**: the strings used for the five canonical triage roles
 - **Domain docs**: where the glossary and ADRs live, and the rules for reading them
+- **Git**: what git operations agents may perform (pushing defaults to never on their own), and the protocol for a failed git operation
 - **Writing standard**: the always-loaded block in the steering file that governs how all agent output reads
 
 This is a prompt-driven skill, not a deterministic script. Explore, present what you found, confirm with the user, then write.
@@ -65,13 +66,35 @@ Offer **multi-context** (a root `docs/glossary-map.md` pointing at per-context g
 
 Only the chosen variant is written: `docs/agents/domain.md` describes the layout this repo actually uses, never both.
 
+**Section D: Git policy.** Conditional: the user decides whether this repo carries it at all.
+
+Ask exactly one question:
+
+> Do you want the git policy reference? It carries the push guardrails, generalized commit-requirement guidance, and the protocol for a failed git operation. (recommended: **yes**)
+
+On **no**, write nothing: omit the `### Git` sub-block and don't create `docs/agents/git.md`. On **yes**, ask one more question:
+
+> May agents push to the remote on their own? (recommended: **no**)
+
+On **no** (the default), write the seed as-is: agents never push on their own; the maintainer pushes, or explicitly asks for it. On **yes**, replace the seed's Push line with what the user allowed, including any conditions they state (e.g. "only feature branches"). Skip the push question only when the repo has no remote; keep the default and say so. The other guardrails (force push, shared-history rewrites) ship as defaults in the seed; don't ask about each one - point the user at the file to edit them later.
+
+The "Commit requirements" section ships generalized, never prefilled from the setup machine's git config: requirements sit with each maintainer's machine, so one maintainer's signing setup does not describe another's. If the repo enforces something for everyone (branch protection demanding signed commits, a CI sign-off check), the maintainer records it in the file later. Step 3 shows the draft, so the user can correct it before anything is written.
+
+Write the `### Git` one-liner in the same pointer style as the other entries: one short line stating the push answer and the reporting rule, never a copy of the file's guidance:
+
+> Agents never push on their own; a failed git operation is reported to the maintainer before diagnosis. See `docs/agents/git.md`.
+
+> Agents may push to the remote; a failed git operation is reported to the maintainer before diagnosis. See `docs/agents/git.md`.
+
+On re-runs, ask only while the steering block lacks `### Git` and `docs/agents/git.md` doesn't exist; once adopted, the sub-block's presence ends the asking. When git.md already exists, leave it alone: its Push answer and any maintainer recordings are user-owned.
+
 ### 3. Confirm and edit
 
 Show the user a draft of:
 
 - The `## Agent skills` block to add to whichever of `CLAUDE.md` / `AGENTS.md` is being edited (see step 4 for selection rules)
 - The writing-standard block from [writing-standard.md](./writing-standard.md). The delimiters and version are part of the block's contract, so its wording is not edited here: wording changes ship only after an approved change list, via `update-engineering-skills`.
-- The contents of `docs/agents/issue-tracker.md`, `docs/agents/domain.md`, and `docs/agents/triage-labels.md` (the last only when `triage` is installed)
+- The contents of `docs/agents/issue-tracker.md`, `docs/agents/domain.md`, `docs/agents/git.md`, and `docs/agents/triage-labels.md` (git only when the user accepted Section D; triage-labels only when `triage` is installed)
 
 Let them edit before writing.
 
@@ -103,9 +126,13 @@ The block:
 ### Domain docs
 
 [one-line summary of layout: "single-context" or "multi-context"]. See `docs/agents/domain.md`.
+
+### Git
+
+[one-line summary of git policy and the failed-operation protocol]. See `docs/agents/git.md`.
 ```
 
-Include the `### Triage labels` sub-block, and write `docs/agents/triage-labels.md`, only when `triage` is installed and Section B ran. When it isn't, both are omitted.
+Include the `### Triage labels` sub-block, and write `docs/agents/triage-labels.md`, only when `triage` is installed and Section B ran. When it isn't, both are omitted. Include the `### Git` sub-block, and write `docs/agents/git.md`, only when the user accepted Section D; when they didn't, both are omitted.
 
 Then copy the writing-standard block from [writing-standard.md](./writing-standard.md) verbatim, delimiters included, into the steering file below the agent-skills block. If a delimited writing-standard block already exists there, replace its contents in place rather than appending a second block.
 
@@ -119,6 +146,7 @@ Then write the docs files using the seed templates in this skill folder as a sta
 - [issue-tracker-freeform.md](./issue-tracker-freeform.md): any other workflow, filled in from the user's description
 - [triage-labels.md](./triage-labels.md): label mapping (only if `triage` is installed)
 - [domain-single-context.md](./domain-single-context.md) or [domain-multi-context.md](./domain-multi-context.md), written to `docs/agents/domain.md`: only the chosen variant
+- [git.md](./git.md): git policy (with the user's push answer) and the failed-operation protocol (only if the user accepted Section D)
 
 ### 5. Done
 

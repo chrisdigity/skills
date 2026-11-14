@@ -21,7 +21,7 @@ Add `-g` to install globally instead of project-local.
 
 Each skill folder holds its SKILL.md plus its reference files, scripts, and agent metadata, carried unchanged from upstream; the router is the exception, rewritten for this repository's docs/ flow. Skill descriptions live in each SKILL.md and in upstream's README.
 
-Two fork-authored skills complete the set (28 total): `setup-engineering-skills` configures a repository for the others (tracker, labels, domain-docs variant, writing-standard block), and `update-engineering-skills` refreshes the installed skills through the skills CLI and migrates the managed configuration, preserving everything custom under `docs/`.
+Two fork-authored skills complete the set (28 total): `setup-engineering-skills` configures a repository for the others (tracker, labels, domain-docs variant, git policy, writing-standard block), and `update-engineering-skills` refreshes the installed skills through the skills CLI and migrates the managed configuration, preserving everything custom under `docs/`.
 
 ## Divergences from upstream
 
