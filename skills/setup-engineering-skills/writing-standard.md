@@ -1,4 +1,4 @@
-<!-- writing-standard v1: managed block. setup-engineering-skills writes this; update-engineering-skills replaces it in place; hand edits are overwritten. Wording changes ship only after an approved change list. -->
+<!-- writing-standard v2: managed block. setup-engineering-skills writes this; update-engineering-skills replaces it in place; hand edits are overwritten. Wording changes ship only after an approved change list. -->
 
 ## Response and writing standard
 This standard applies to all agent output: chat responses, research summaries, technical explanations, specs, tickets, glossary entries, ADRs, and repo documentation. It adapts patterns from Wikipedia's *Signs of AI Writing* field guide to eliminate machine-learning stylistic regressions.
@@ -23,18 +23,7 @@ Language models smooth specific facts into generic prose: ordinary facts arrive 
 
 ### Required standard for technical explanations
 Cutting fluff must never compromise technical mechanics or causal clarity.
-- **Preserve causal glue:** When stating a design choice or constraint, explicitly state the underlying physical or architectural mechanism (*"System X requires component Y because process Z overwrites local state"*).
-- **Retain concrete data:** Never drop file paths, numbers, error codes, configuration keys, or explicit dependencies for the sake of brevity.
+- **Preserve the mechanism:** When stating a design choice or constraint, explicitly state the underlying physical or architectural mechanism (*"System X requires component Y because process Z overwrites local state"*), and keep the concrete data that carries it: file paths, numbers, error codes, configuration keys, explicit dependencies.
+  Bad: "Storage layer: unchanged, local engine, zero external deps." Good: "The storage layer remains unchanged because the engine executes locally on disk, requiring no external network services or third-party credentials."
 
-### Examples
-
-#### Bad (Significance Puffery)
-> The primary database serves as the central nexus of the architecture, fostering seamless data flow across services while marking a pivotal milestone in system reliability.
-
-#### Bad (Over-Compressed Shorthand)
-> Storage layer: unchanged — local engine, zero external deps.
-
-#### Good (Plain Technical Explanation with Causal Glue)
-> The storage layer remains unchanged because the engine executes locally on disk, requiring no external network services or third-party credentials.
-
-<!-- /writing-standard v1 -->
+<!-- /writing-standard v2 -->
