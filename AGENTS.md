@@ -4,11 +4,16 @@ Per-topic configuration that the engineering skills read lives in `docs/agents/`
 ### Issue tracker
 Issues are tracked as local markdown files under `docs/tasks/<feature>/` in this repo. See `docs/agents/issue-tracker.md`.
 
+### Triage labels
+Default canonical triage labels (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`). See `docs/agents/triage-labels.md`.
+
 ### Domain docs
 Single-context: one `docs/glossary.md` and `docs/adr/`. See `docs/agents/domain.md`.
 
 ### Research documents
 Research lives under `docs/research/`, one file per topic. Cross-reference files as `docs/research/<topic>` in ADRs, specs, and tickets.
+
+<!-- writing-standard v1: managed block. setup-engineering-skills writes this; update-engineering-skills replaces it in place; hand edits are overwritten. Wording changes ship only after an approved change list. -->
 
 ## Response and writing standard
 This standard applies to all agent output: chat responses, research summaries, technical explanations, specs, tickets, glossary entries, ADRs, and repo documentation. It adapts patterns from Wikipedia's *Signs of AI Writing* field guide to eliminate machine-learning stylistic regressions.
@@ -46,3 +51,5 @@ Cutting fluff must never compromise technical mechanics or causal clarity.
 
 #### Good (Plain Technical Explanation with Causal Glue)
 > The storage layer remains unchanged because the engine executes locally on disk, requiring no external network services or third-party credentials.
+
+<!-- /writing-standard v1 -->
