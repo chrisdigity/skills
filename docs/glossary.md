@@ -5,7 +5,7 @@ Language for this repository: a fork of Matt Pocock's engineering skills, restru
 ## Subsystems
 
 **skills distribution**:
-The subsystem that carries the skill set from upstream through this fork into installed projects: packaging and layout, install through the skills CLI, and the import log governing upstream derivation. Spec: docs/specs/skills-distribution.md.
+The subsystem that carries the skill set from upstream through this fork into installed projects: packaging and layout, install through the skills CLI, and the divergence list governing upstream derivation. Spec: docs/specs/skills-distribution.md.
 
 **project configuration**:
 The subsystem that configures a repository to run the workflow and keeps that configuration current: the managed artifacts and steering-file blocks that setup-engineering-skills writes and update-engineering-skills migrates. Spec: docs/specs/project-configuration.md.
@@ -63,8 +63,8 @@ The template file in the setup-engineering-skills folder that a managed artifact
 **upstream**:
 Matt Pocock's original skill set, from which these skills derive; his updates are imported into this fork periodically, never the reverse. Divergences are recorded in the fork's README so each import stays deliberate.
 
-**import log**:
-The append-only record of every deliberate divergence from upstream and every edit to a carried skill, one dated entry each with its reason; it is what makes each upstream import a deliberate act rather than a silent overwrite.
+**divergence list**:
+The curated list of every live divergence from upstream, one entry per divergence with its reason, maintained in place; a carried skill's edit updates its divergence's entry or adds one. It is what makes each upstream import a deliberate act rather than a silent overwrite. _Avoid_: import log, changelog.
 
 **fork**:
 A derived, independently maintained copy of upstream; updates flow from upstream into it, never back. This repository is the fork, installed into projects with npx skills add chrisdigity/skills.

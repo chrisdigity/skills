@@ -12,16 +12,16 @@ Skills are packaged one directory per skill, each directory holding the skill's 
 
 A project installs the set with the skills CLI, project-locally by default or globally with a flag; the CLI requires Node.js 22.20 or later. The install writes a lockfile that records content hashes for every installed skill folder, so an installed copy is verifiable against the source without rerunning the install.
 
-Every deliberate divergence from upstream and every edit to a carried skill appends one dated entry to the import log, which the README carries. The log is append-only; it is the record that makes each upstream import a deliberate act rather than a silent overwrite.
+Every deliberate divergence from upstream is listed, with its reason, in the divergence list, one entry per live divergence; a carried skill's edit updates its divergence's entry or adds one. The list is what makes each upstream import a deliberate act rather than a silent overwrite: the importer can tell upstream's new work from a divergence to defend without archaeology.
 
 ## Interfaces and contracts
 
 - Install contract: one command into any project, naming this repository, installs every skill the CLI discovers here; installed folders are byte-identical copies of the source folders.
 - Verification contract: the lockfile's computed hashes identify which installed folders differ from their source, so drift from hand edits or partial updates is detectable.
-- Import contract: one dated entry per edited skill or deliberate divergence, stating the change and its reason.
+- Divergence contract: one entry per live divergence, stating what differs and why, maintained in place rather than appended to; the file's length is bounded by the divergence count, not the edit count.
 - Consumer contract: the project-configuration subsystem's update skill refreshes installed skill folders through the CLI and reads its seed templates from the installed sibling folder, so the install layout is what migration operates on.
 
 ## Decisions in force
 
 - ADR 0004, skill-file refresh delegates to the skills CLI: installed copies are refreshed through the CLI's check and update path, and the lockfile's hashes stay the install-state truth; no parallel installer exists.
-- No ADR governs upstream derivation. The one-directional policy is operating policy recorded in the import log, deliberately not standardized as a decision record.
+- No ADR governs upstream derivation. The one-directional policy is operating policy recorded in the divergence list, deliberately not standardized as a decision record.
