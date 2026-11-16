@@ -1,0 +1,39 @@
+name: skills-discovery
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  discovery:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Default discovery finds 28 skills
+        run: |
+          out=$(npx -y skills add ./ --list)
+          echo "$out"
+          echo "$out" | grep -q "Found 28 skills" || { echo "Expected 28 discoverable skills"; exit 1; }
+          if echo "$out" | grep -q "SKIPPED"; then
+            echo "A SKILL.md failed to parse during discovery:"
+            echo "$out" | grep "SKIPPED"
+            exit 1
+          fi
+      - name: Full discovery finds 29 skills
+        run: |
+          out=$(INSTALL_INTERNAL_SKILLS=1 npx -y skills add ./ --list)
+          echo "$out"
+          echo "$out" | grep -q "Found 29 skills" || { echo "Expected 29 skills with INSTALL_INTERNAL_SKILLS=1"; exit 1; }
+          if echo "$out" | grep -q "SKIPPED"; then
+            echo "A SKILL.md failed to parse during discovery:"
+            echo "$out" | grep "SKIPPED"
+            exit 1
+          fi
