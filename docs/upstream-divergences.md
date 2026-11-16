@@ -1,6 +1,6 @@
 # Divergences from upstream
 
-This fork derives from mattpocock/skills, imported at upstream commit 4ae2317 on 2026-11-12. Derivation is one-directional: upstream updates are imported here periodically, never the reverse. This file lists every live divergence with its reason, one entry per divergence. A skill edit updates its divergence's entry or adds one, and an entry is removed only if the fork re-adopts upstream's behavior. The list is what makes each import a deliberate act: at import time the fork's differences are already named, so an upstream diff sorts into his new work, a divergence to defend, or drift to undo.
+This fork derives from mattpocock/skills, imported at upstream commit 4ae2317 on 2026-11-12 and carried verbatim in fork commit 43dd672. Derivation is one-directional: upstream updates are imported here periodically, never the reverse. This file lists every live divergence with its reason, one entry per divergence. A skill edit updates its divergence's entry or adds one, and an entry is removed only if the fork re-adopts upstream's behavior. The list is what makes each import a deliberate act: at import time the fork's differences are already named, so an upstream diff sorts into his new work, a divergence to defend, or drift to undo.
 
 ## The fork's shape
 
@@ -25,3 +25,4 @@ This fork derives from mattpocock/skills, imported at upstream commit 4ae2317 on
 ## Fork-authored skills
 
 - update-engineering-skills: new; upstream has no counterpart. Implements no installer: file refresh delegates to the skills CLI, and the skill's own instructions migrate the managed artifacts (inventory, classify against the latest seeds, plan and confirm before any write, regenerate byte-identical, preserve everything unmanaged, raise conflicts instead of overwriting). Ownership is recorded in ADR 0003.
+- import-upstream-skills: new; upstream has no counterpart. Installs upstream side-by-side in the gitignored .scratch/ directory, diffs skills/ against it, attributes every difference from fork history (the foundation commit holds the verbatim import) with a raw fetch of the recorded upstream commit as the fallback baseline, and applies the confirmed import to skills/ and this ledger. The fork-side counterpart to update-engineering-skills. Carries metadata.internal: true: it serves this repository's maintenance, so default installs never pick it up.

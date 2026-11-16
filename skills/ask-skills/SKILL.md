@@ -100,7 +100,8 @@ Off the main flow entirely.
 
 ## Precondition
 
-Two skills keep the flow configured:
+Three skills keep the skill set configured:
 
 - **`/setup-engineering-skills`**: run before your first engineering flow in a project. It configures what the other skills read: the tracker, triage labels, the domain-docs variant, and the **managed artifacts** (docs/agents/*.md and the writing-standard block in the steering file). Hosted trackers work too; the local tracker at docs/tasks/ is the default.
 - **`/update-engineering-skills`**: the maintenance half of the pair. It delegates skill-file refresh to the skills CLI, then migrates the managed artifacts: present a plan, confirm before any write, regenerate, and leave unmanaged content under docs/ untouched; when an update would overwrite custom content, it raises the conflict instead.
+- **`/import-upstream-skills`**: run in the fork repository itself (chrisdigity/skills) to pull upstream's changes into the carried skills. It installs upstream side-by-side under .scratch/, attributes every difference from fork history and the divergence ledger, and applies the confirmed import to skills/ and docs/upstream-divergences.md.
