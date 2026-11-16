@@ -1,92 +1,92 @@
 ---
 name: update-engineering-skills
-description: "Refresh the installed engineering skills to the latest version through the skills CLI, then migrate this repo's managed configuration (docs/agents/*.md and the steering file's writing-standard block) to the latest templates. Preserves everything custom under docs/."
+description: "Pull upstream's changes into this fork: install mattpocock/skills side-by-side under docs/tmp/, sort every difference into upstream's new work, a divergence to defend, or drift to undo, and apply the confirmed import to skills/ and docs/divergences.md."
+metadata:
+  internal: true
 disable-model-invocation: true
 ---
 
 # Update engineering skills
 
-Run this after the engineering skills were installed or updated. It has two jobs, in order:
+Run this in the fork repository (chrisdigity/skills), where skills/ holds the sources. Two jobs, in order:
 
-1. **Refresh the skill files**, by delegating to the skills CLI.
-2. **Migrate the managed artifacts**, so this repo's configuration matches the refreshed skills.
+1. **Compare and classify**: install upstream side-by-side, diff, and sort every difference into the divergence ledger's three buckets.
+2. **Apply the confirmed import**: carry the user's decisions into skills/ and the ledger.
 
-The managed-artifacts contract: `docs/agents/*.md` and the writing-standard block in the steering file are owned by `setup-engineering-skills` and this skill. Everything else under `docs/` is unmanaged and preserved as-is, so custom extensions survive an update untouched.
+The ledger at docs/divergences.md is the contract: every live divergence is named there with its reason. This skill never introduces an undocumented divergence: a difference ends the run adopted, defended by a ledger entry, or undone. In a consuming repo (no skills/ directory at the root) there is nothing to import into: say so and stop.
 
-This skill is not an installer. Skill-file refresh goes through the CLI; this skill's own instructions are spent entirely on migration.
+This is the fork-side counterpart to update-agent-docs, which refreshes consuming repos from this fork after the user commits and pushes.
 
 ## Process
 
-### 1. Refresh the skill files (the CLI's job)
+### 1. Install upstream side-by-side
 
-From the repo root:
+docs/tmp/ is gitignored working state, and a stale comparison is worse than none, so start clean:
 
-- `npx skills check`: reports skills with available updates, plus installed skill files whose content differs from the hash in `skills-lock.json` ("has local changes"). Exit code 1 means there is something to update; exit code 0 means everything is current.
-- `npx skills update`: refreshes installed skills from their source. Add `-y` to skip the scope prompt (auto-detects project scope in a project directory), or `-g` instead when the skills were installed globally. Name skills after the command to update only those.
+- Delete docs/tmp/.agents/ and docs/tmp/skills-lock.json when present.
+- From inside docs/tmp/: `npx skills add mattpocock/skills -y`. The -y skips the scope prompt, installing into docs/tmp/.agents/skills/.
+- The CLI errors when Node is older than 22.20 or the network is unreachable: report the error and stop.
 
-Read the check output before updating. A "has local changes" entry is an installed skill file someone edited by hand, and the update reinstalls it from the source repo, losing that edit: flag each one to the user before running the update.
+### 2. Pair and diff
 
-If `npx skills check` exits 0, the files are current and the update is skipped; continue to migration, since the managed artifacts may have drifted on their own.
+Pair every folder in skills/ with its upstream counterpart in docs/tmp/.agents/skills/. The rename map:
 
-Do not copy skill files by hand, write your own installer, or patch installed `SKILL.md` files to simulate an update. If the CLI errors, report the error and stop.
+- ask-skills pairs with upstream's ask-matt
+- setup-agent-docs pairs with upstream's setup-matt-pocock-skills
 
-### 2. Locate the seed templates
+(When the ledger records a new rename, add its pair here.)
 
-Managed artifacts are regenerated from the seed templates in the `setup-engineering-skills` folder installed next to this skill's folder (project installs: `.agents/skills/setup-engineering-skills/`; global installs: the same folder under the global skills directory). Step 1 refreshed it, so its seeds are the latest:
+Sort the unpaired folders:
 
-- `issue-tracker-local.md`, `issue-tracker-github.md`, `issue-tracker-gitlab.md`, `issue-tracker-freeform.md`: the four tracker variants
-- `domain-single-context.md`, `domain-multi-context.md`: the two domain-docs variants
-- `triage-labels.md`: the label mapping
-- `git.md`: the git policy reference
-- `writing-standard.md`: the versioned writing-standard block
+- Fork-only (currently update-agent-docs and update-engineering-skills): fork-authored, no diff.
+- Upstream-only: a new upstream skill, an import candidate the user decides on.
+- A carried skill missing upstream entirely: upstream removed it; the user decides whether the fork maintains it from here on (record that in the ledger) or drops it.
 
-If the sibling folder is missing (a partial install), stop and tell the user to reinstall the pair with `npx skills add chrisdigity/skills`. Never regenerate a managed artifact from memory. When the skills were installed globally, `npx skills list -g` prints the global skills directory this folder lives under.
+Per paired folder, run `git diff --no-index --stat skills/<name> docs/tmp/.agents/skills/<upstream-name>`, then read the full diff per differing file. When a diff shows every line changed, check line endings before reading content: CR/LF noise masks real edits.
 
-### 3. Inventory the managed artifacts
+### 3. Attribute each difference
 
-If `docs/agents/` does not exist and no delimited writing-standard block exists in any steering file, setup has never run in this repo: say so and point at `/setup-engineering-skills`; there is nothing to migrate.
+The fork's history is the attribution instrument. The foundation commit 43dd672 ("Fork foundation: carry 26 upstream skills verbatim") holds upstream-at-import content for the carried skills, under upstream's names for the renames. For each differing file, take the first classification that fits:
 
-Otherwise enumerate every file under `docs/agents/` (the managed contract covers all of it, not just the paths below), then read:
+1. **Ledgered**: a live entry in docs/divergences.md explains the difference. When upstream's copy of the file matches the copy at the stamp's commit (one raw fetch, the same mechanism as the fallback baseline below), the difference is exactly the ledgered divergence: defend, no action, list it as defended. When upstream's copy has changed since the stamp, upstream did new work in a file the fork defends, so classify as both sides (4) instead: the entry and upstream's evolution are presented side by side, and the user decides whether the entry still defends.
+2. **Fork-side, undocumented**: `git log --oneline -- skills/<name>/<file>` shows fork commits after the baseline touching the file, and no ledger entry explains the change. Drift candidate: the user restores upstream's version (undo) or keeps it and the import adds a ledger entry (defend).
+3. **Upstream-side**: `git show <baseline>:skills/<upstream-name>/<file>` matches the fork's current copy, so the fork never touched the file and the whole difference is upstream's new work since the recorded import. Import candidate; note when the file also carries ledgered divergences, because adopting means merging them.
+4. **Both sides**: fork commits touch the file and the baseline differs from upstream-now. Present the fork's divergence and upstream's change side by side; the user decides the merge.
 
-- `docs/agents/issue-tracker.md`: the tracker type, from its title ("Issue tracker: local markdown" / GitHub / GitLab / freeform). When the steering file's `## Agent skills` block is present, cross-check its `### Issue tracker` one-liner; on a mismatch, surface it in the plan instead of picking one silently.
-- `docs/agents/domain.md`: the variant, from its File structure section. Never switch variants during an update.
-- `docs/agents/triage-labels.md`: present or missing (managed only while the `triage` skill is installed).
-- `docs/agents/git.md`: present or missing (managed only when the steering file's agent-skills block carries a `### Git` sub-block; its Push line records the repo's push policy).
-- The steering file (`CLAUDE.md` where that is what exists, else `AGENTS.md`): the delimited writing-standard block and the version in its opening delimiter (`<!-- writing-standard v1: ... -->`). If neither steering file exists, there is nothing to migrate there.
+The baseline is upstream-at-import for the file, looked up in order:
 
-Classify each existing artifact against the latest seed for its path. The seed-to-path mapping comes from the sibling folder's file names: `issue-tracker-*` and `domain-*` are the variants behind `issue-tracker.md` and `domain.md`, `triage-labels.md` targets itself, `writing-standard.md` targets the steering-file block, and any other seed file targets `docs/agents/<seed file name>`, so a seed the current managed set does not know is a newly managed artifact:
+1. Fork history: `git show 43dd672:skills/<upstream-name>/<file>`. The setup skill was authored fresh, never carried verbatim, so its baseline is not in history.
+2. Raw fetch of the recorded upstream commit: `https://raw.githubusercontent.com/mattpocock/skills/<upstream-commit>/<source-path>`, where the ledger's header gives <upstream-commit> and docs/tmp/skills-lock.json gives <source-path> (its skillPath entries name upstream's category-nested paths).
 
-- **Matches the seed**: current, nothing to do.
-- **Same shape, different content** (title and section structure match the seed's): a managed artifact that is outdated or hand-edited. The migration regenerates it; show the diff in the plan. For the writing-standard block this overwrite is by design: hand edits to the block are lost, and custom extensions belong in unmanaged files.
-- **Different shape** (its title matches no seed for that path): not setup output. A custom file is sitting at a managed path; raise a conflict (step 4) and never overwrite it. This is what catches a custom file shadowing an artifact the latest templates newly manage.
-- **freeform**: an `issue-tracker.md` written from the freeform seed is never regenerated, whatever it now contains; its workflow text is the user's own words. If the freeform seed changed, present the seed's diff and ask how to proceed.
-- **user-owned**: `git.md` is never regenerated once written; its Push answer and any maintainer recordings are the user's own words. If the git seed changed, present the seed's diff and ask how to proceed.
-- **Missing**: offer to create it from the latest seed in the plan.
+After a merged import, fork history no longer holds a pristine upstream snapshot, and the raw fetch becomes the primary baseline. That is expected: the ledger's stamp exists for exactly this.
 
-A file under `docs/agents/` that no seed explains and no classification above fits is unattributable: raise it in the plan and leave it alone unless the user says otherwise.
+### 4. Present the plan and confirm
 
-### 4. Present the migration plan and confirm
+Present the plan before any write, one line per action, grouped by bucket:
 
-Present the plan before any write, one line per action:
-
-- What step 1 did (updated, or already current).
-- Per managed artifact, the action its step 3 classification calls for: regenerate (with the diff), already current, create, preserve, or raise as a conflict.
-- Each conflict and its proposed resolution. A custom file at a managed path is presented side by side with the managed artifact it shadows, and the user picks: keep theirs (the path stays custom and this skill no longer manages it), or adopt the managed artifact (theirs is moved aside first, never deleted). When the latest templates introduce a managed artifact this repo does not have, offer to create it and extend the steering file's `## Agent skills` block to reference it; the acceptance-gated git policy is the exception, offered only when its `### Git` sub-block is already present and otherwise left to setup.
-- The preservation guarantee: nothing outside `docs/agents/` and the steering file's two managed blocks (the `## Agent skills` block and the writing-standard block) will be written.
+- **Import**: adopt upstream's change (file, what changed, merge notes when the file carries divergences).
+- **Defend**: keep the fork's version; the ledger entry exists, or the drafted entry is shown.
+- **Undo**: restore upstream's version, dropping an undocumented fork edit.
+- **Adopt**: carry a new upstream skill into skills/ (folder flattened out of its category, name kept).
+- **Skip**: no action this import.
 
 Wait for an explicit yes. No write happens before it.
 
-### 5. Write
+### 5. Apply
 
-- Regenerate each confirmed artifact byte-identical to its seed.
-- Replace the writing-standard block in place: locate it by its delimiters, then swap the contents and version for the latest seed's block, delimiters included. When the block is missing, insert the latest one below the `## Agent skills` block. Never touch the rest of the steering file.
-- Preserve the freeform tracker file and the user-owned git.md as-is.
+- Import: apply upstream's change to the fork's copy. When the file carries divergences, hand-merge: upstream's change in, ledgered divergences intact.
+- Adopt: copy the folder from docs/tmp/.agents/skills/<name> to skills/<name>.
+- Undo: copy the file from docs/tmp/.agents/skills/<upstream-name>/.
+- Ledger: add entries for newly defended divergences, remove entries for retired ones, and update the header stamp with the upstream commit and date this import carried. One API call fetches the hash (`https://api.github.com/repos/mattpocock/skills/commits?per_page=1`); when offline, keep the previous stamp and say so.
+- README: update the skill counts when a skill was adopted.
+- Stage nothing, commit nothing: the user reviews the diff and commits, and agents never push on their own (docs/agents/git-operations.md).
 
 ### 6. Done
 
-Report what the CLI refreshed, what migrated, what was preserved, and how each conflict was resolved. End by noting that optional managed artifacts the latest templates carry but this repo has not adopted (currently `git.md`) can be added by re-running `/setup-engineering-skills`. Done when all four are checkable:
+Report what was imported, defended, undone, and adopted, and the ledger's new stamp. Done when all three are checkable:
 
-- `npx skills list` shows no `modified` skills (installed files match the lock's content hashes)
-- Every managed artifact ends in the state its step 3 classification and the confirmed plan defined: matching its latest seed, or under a documented exception (freeform preserved, git.md preserved, conflict kept custom)
-- Unmanaged content untouched: `git status` shows changes only at the expected paths
-- Every conflict raised got an explicit resolution from the user
+- Re-running the paired-folder diffs leaves only differences a ledger entry documents.
+- The ledger's stamp names this import's upstream commit and date.
+- git status shows changes only under skills/, docs/divergences.md, and README.md.
+
+Then note the handoff: consuming repos pick the import up with `npx skills update` followed by /update-agent-docs; in this repo, refresh the test install with `npx skills add chrisdigity/skills` so .agents/skills mirrors sources.

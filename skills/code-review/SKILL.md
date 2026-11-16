@@ -10,7 +10,7 @@ Two-axis review of the diff between `HEAD` and a fixed point the user supplies:
 
 Both axes run as **parallel sub-agents** so they don't pollute each other's context, then this skill aggregates their findings. Start every sub-agent with a fresh context window.
 
-The issue tracker should have been provided to you. If not, tell the user to run `/setup-engineering-skills`.
+The issue tracker should have been provided to you. If not, tell the user to run `/setup-agent-docs`.
 
 ## Process
 
@@ -73,7 +73,7 @@ Issue both sub-agent calls together, in the foreground, and aggregate the report
 - The diff command and commit list.
 - The path or fetched contents of the spec.
 - The paths of the `docs/specs/` subsystem specs whose behavior the diff touches, when any exist.
-- The brief: "Report: (a) requirements the spec asked for that are missing or partial; (b) behavior in the diff that wasn't asked for (scope creep); (c) requirements that look implemented but where the implementation looks wrong; (d) promotion consistency: where the diff changes behavior a `docs/specs/` subsystem spec describes, the diff must carry its promotion, meaning the subsystem spec updated in the same change; flag a behavior change that leaves the subsystem spec stale. Quote the spec line for each finding. Under 400 words."
+- The brief: "Report: (a) requirements the spec asked for that are missing or partial; (b) behaviour in the diff that wasn't asked for (scope creep); (c) requirements that look implemented but where the implementation looks wrong; (d) promotion consistency: where the diff changes behavior a `docs/specs/` subsystem spec describes, the diff must carry its promotion, meaning the subsystem spec updated in the same change; flag a behavior change that leaves the subsystem spec stale. Quote the spec line for each finding. Under 400 words."
 
 If the spec is missing, skip the Spec sub-agent and note this in the final report.
 

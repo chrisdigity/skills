@@ -1,20 +1,23 @@
 # Agent instructions
 Per-topic configuration that the engineering skills read lives in `docs/agents/`:
 
+### Domain docs
+Single-context: one `docs/glossary.md` and `docs/adr/`. See `docs/agents/domain.md`.
+
 ### Issue tracker
 Issues are tracked as local markdown files under `docs/tasks/<feature>/` in this repo. See `docs/agents/issue-tracker.md`.
 
 ### Triage labels
 Default canonical triage labels (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`). See `docs/agents/triage-labels.md`.
 
-### Domain docs
-Single-context: one `docs/glossary.md` and `docs/adr/`. See `docs/agents/domain.md`.
-
-### Git
-Agents never push on their own; a failed git operation is reported to the maintainer before diagnosis. See `docs/agents/git.md`.
-
-### Research documents
+### Research docs
 Research lives under `docs/research/`, one file per topic. Cross-reference files as `docs/research/<topic>` in ADRs, specs, and tickets.
+
+### Disposable docs
+Disposable working files (drafts, temp notes, scratch comparisons) go in gitignored `docs/tmp/`. Nothing committed references a `docs/tmp/` path.
+
+### Git operations
+Agents never push on their own; a failed git operation is reported to the maintainer before diagnosis. See `docs/agents/git-operations.md`.
 
 <!-- writing-standard v2: managed block. setup-engineering-skills writes this; update-engineering-skills replaces it in place; hand edits are overwritten. Wording changes ship only after an approved change list. -->
 

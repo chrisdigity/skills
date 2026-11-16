@@ -8,7 +8,7 @@ Skills distribution is the subsystem that carries the skill set from upstream th
 
 The repository is a fork of upstream: a derived, independently maintained copy. Updates flow from upstream into the fork, never the reverse, and nothing is contributed back.
 
-Skills are packaged one directory per skill, each directory holding the skill's definition file with its name and description frontmatter plus any reference files, scripts, and agent metadata. The layout sits within the three-level depth the skills CLI discovers. Skill names are kept from upstream so upstream changes stay visible during imports; the only rename is the router, upstream's ask-matt, which is ask-skills here. One upstream skill is not carried: setup-matt-pocock-skills is superseded by this fork's setup-engineering-skills.
+Skills are packaged one directory per skill, each directory holding the skill's definition file with its name and description frontmatter plus any reference files, scripts, and agent metadata. The layout sits within the three-level depth the skills CLI discovers. Skill names are kept from upstream so upstream changes stay visible during imports; two renames: the router, upstream's ask-matt, which is ask-skills here, and setup-matt-pocock-skills, carried as setup-agent-docs and restructured for this fork's configuration flow.
 
 A project installs the set with the skills CLI, project-locally by default or globally with a flag; the CLI requires Node.js 22.20 or later. The install writes a lockfile that records content hashes for every installed skill folder, so an installed copy is verifiable against the source without rerunning the install.
 

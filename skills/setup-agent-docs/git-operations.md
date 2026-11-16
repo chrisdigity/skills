@@ -1,4 +1,4 @@
-# Git
+# Git operations
 
 What git operations agents may perform in this repo, and what to do when a git operation fails on a requirement only the maintainer can satisfy.
 

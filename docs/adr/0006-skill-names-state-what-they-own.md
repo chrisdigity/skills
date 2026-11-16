@@ -1,0 +1,5 @@
+# Skill names state what each skill owns
+
+Three skill names had drifted from what the skills do: update-engineering-skills mostly migrates managed configuration (the skills CLI does the skill-file refresh), import-upstream-skills is what "updating the engineering skills" means in this fork, and setup-engineering-skills configures documents rather than skills. The swap renames all three so each name states what it owns: setup-engineering-skills is setup-agent-docs, update-engineering-skills is update-agent-docs, and import-upstream-skills takes the freed name update-engineering-skills. The alternative was keeping the established names for stability; rejected because the misleading names compound with every installed repo and every import.
+
+Consequences: consuming repos pick the new command names up through their next update, the rename map still pairs setup-agent-docs with upstream's setup-matt-pocock-skills, the writing-standard block's management comment names the new pair (version stays v2, the standard's wording is unchanged), and ADRs 0001 through 0005 keep the old names as dated records.
