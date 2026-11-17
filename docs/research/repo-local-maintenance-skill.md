@@ -2,7 +2,7 @@
 
 Question: can update-engineering-skills leave the distributed skillset (`skills/`) and live as a committed project skill at `.agents/skills/update-engineering-skills/`, kept under version control through a gitignore exception?
 
-Decision (2026-11-17): the maintainer kept the skill in `skills/` after all. One finding from this investigation was adopted regardless: because `metadata.internal: true` makes the CLI skip the skill when installing and omit it from `list`, the test-install mirror copy is completed by hand, and the procedure is recorded as a maintainer note in the skill's Done-step handoff. The finding also explained a stale installed copy at that path (a pre-rename snapshot of the retired migration skill, lock entry pinned to commit 785a755), which the hand copy replaced.
+Decision (2026-11-17): the maintainer kept the skill in `skills/` after all. Two findings from this investigation were adopted regardless: the CLI's `INSTALL_INTERNAL_SKILLS=1` environment variable (confirmed against the CLI's code and docs, and verified end to end) is the official way to install and view internal skills, recorded in `skills/update-engineering-skills/notes.md`; and the stale installed copy at `.agents/skills/update-engineering-skills/` (a pre-rename snapshot of the retired migration skill, lock entry pinned to commit 785a755) was replaced with the current tool.
 
 Investigated 2026-11-17. Findings are empirical where marked, verified against the skills CLI's actual behavior in `docs/tmp/` scratch installs.
 
