@@ -89,4 +89,4 @@ Report what was imported, defended, undone, and adopted, and the ledger's new st
 - The ledger's stamp names this import's upstream commit and date.
 - git status shows changes only under skills/, docs/divergences.md, and README.md.
 
-Then note the handoff: consuming repos pick the import up with `npx skills update` followed by /setup-agent-docs; in this repo, refresh the test install with `npx skills add chrisdigity/skills` so .agents/skills mirrors sources.
+Then note the handoff: consuming repos pick the import up with `npx skills update` followed by /setup-agent-docs; in this repo, refresh the test install with `npx skills add chrisdigity/skills` so .agents/skills mirrors sources. Maintainer note, not a step for the agent to run: the CLI skips skills carrying `metadata.internal: true` when installing and omits them from `list`, so this skill's mirror copy is completed by hand - `rm -rf .agents/skills/update-engineering-skills && cp -r skills/update-engineering-skills .agents/skills/` (the same pattern for any future internal skill). The hand-copied folder is untracked and left untouched by `add`, `update`, and `check`; it takes no lock entry.
