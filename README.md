@@ -19,8 +19,6 @@ npx skills@latest add chrisdigity/skills
 
 Each skill folder holds its SKILL.md plus its reference files, scripts, and agent metadata. Skill descriptions live in each SKILL.md and in upstream's README.
 
-One fork-authored skill completes the set (28 total): `update-engineering-skills` pulls upstream's changes into the carried skills and keeps the divergence ledger current. `setup-agent-docs` is carried from upstream and restructured: it configures the managed configuration (tracker, labels, domain-docs variant, git policy, writing-standard block), and a re-run works as a reinstall that walks the same questions with the current configuration as the defaults, migrates seed drift, and preserves everything custom under `docs/`.
-
 ## Divergences from upstream
 
 Derivation from upstream is one-directional: Matt's updates and improvements are imported here periodically. Every deliberate divergence and its reason is listed in [docs/divergences.md](docs/divergences.md), one entry per live divergence, maintained in place: a skill edit updates its divergence's entry or adds one, which is what keeps each import a deliberate act.
