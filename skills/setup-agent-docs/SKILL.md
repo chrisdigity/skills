@@ -1,6 +1,6 @@
 ---
 name: setup-agent-docs
-description: "Configure this repo for the engineering skills and reconfigure it any time: set up or update its issue tracker, triage label vocabulary, domain doc layout, research and disposable docs locations, git policy, and writing standard. Re-running walks the same questions with the current configuration as the defaults, offers seed drift as diffs, and preserves everything custom under docs/."
+description: "Configure this repo for the engineering skills and reconfigure it any time: set up or update its issue tracker, triage label vocabulary, domain doc layout, research and disposable docs locations, git policy, and writing standard. Re-running asks the same questions together, with the current configuration as the defaults, offers seed drift as diffs, and preserves everything custom under docs/."
 disable-model-invocation: true
 ---
 
@@ -15,7 +15,7 @@ Configure the per-repo configuration that the engineering skills assume, and re-
 - **Git**: what git operations agents may perform (pushing defaults to never on their own), and the protocol for a failed git operation
 - **Writing standard**: the always-loaded block in the steering file that governs how all agent output reads
 
-One pass serves every run. On a first run nothing is recorded, so each section asks its questions with the setup defaults. On a re-run each section asks the same questions with the currently recorded configuration as the recommended answer, so keeping the setup current is a one-word answer per section, and changing any part of it is answering the section's question differently. Seed drift between the installed seed templates and the managed artifacts is offered as diffs. Nothing is inferred and no intent is assumed: the caller's answers decide every write.
+One pass serves every run. On a first run nothing is recorded, so the questions carry the setup defaults. On a re-run the same questions carry the currently recorded configuration as the recommended answers, so keeping the setup current is a one-word reply to a single batched message, and changing any part of it is answering that message's questions differently. Seed drift between the installed seed templates and the managed artifacts is offered as diffs. Nothing is inferred and no intent is assumed: the caller's answers decide every write.
 
 This is a prompt-driven skill, not a deterministic script. Explore, present what you found, confirm with the user, then write.
 
@@ -56,11 +56,11 @@ Look at the current repo to understand its starting state. Read whatever exists;
 - The steering file's writing-standard block, if present: read its version and compare to [writing-standard.md](./writing-standard.md); a difference is drift, presented in step 3.
 - `.gitignore`: whether it carries the `docs/tmp/` entry.
 
-### 2. Present findings and walk the sections
+### 2. Present findings and ask
 
-Summarise what's present and what's missing, including the classification results. Then take the sections in order. One section, one answer, then the next.
+Summarise what's present and what's missing, including the classification results. Then prepare every question the run needs and ask them all in one message, labeled by section: each question led by its recommended answer, so one reply settles the whole set, and accepting every recommendation can be a single word. Exploration settles everything it can first; the questions are prepared once, after it, and never asked one section per turn. When an answer opens follow-up questions (a hosted tracker without a matching remote, a freeform pick needing the workflow paragraph), ask those follow-ups batched in one message as well.
 
-Lead each section with the recommended answer - the currently recorded configuration on a re-run, the setup default on a first run - so the user can accept it in a word. Give a one-line explainer only when the choice genuinely branches; skip the section entirely when exploration already settled it (Section B when `triage` isn't installed, Section C when there's no monorepo and the user hasn't asked about it).
+Lead each question with the recommended answer - the currently recorded configuration on a re-run, the setup default on a first run - so the user can accept it in a word. Give a one-line explainer only when the choice genuinely branches. Omit a question entirely when exploration already settled it (Section B when `triage` isn't installed, Section C when there's no monorepo and the user hasn't asked about it); state what was settled instead of asking it.
 
 **Section A: Issue tracker.**
 
@@ -81,7 +81,7 @@ A GitHub or GitLab tracker needs a reachable repo. When the user picks one and n
 
 **Section B: Triage label vocabulary.** Skip this section entirely if the `triage` skill isn't installed (exploration told you), since an uninstalled skill needs no labels.
 
-If it is installed, ask exactly one question:
+If it is installed, ask:
 
 > Do you want to keep the default triage labels? (a re-run leads with the recorded vocabulary)
 
@@ -93,19 +93,13 @@ Offer **multi-context** (a root `docs/glossary-map.md` pointing at per-context g
 
 Only the chosen variant is written: `docs/agents/domain.md` describes the layout this repo actually uses, never both.
 
-**Section D: Git policy.** The user decides whether this repo carries it at all, and the section asks on every run.
+**Section D: Git policy.** The user decides whether this repo carries it at all, and the section asks on every run - as one compound question in the batch, so one reply settles both parts:
 
-Ask exactly one question:
+> Do you want the git policy reference? It carries the push guardrails, generalized commit-requirement guidance, and the protocol for a failed git operation. (recommended: **yes**) If yes: may agents push to the remote on their own? (recommended: **no**)
 
-> Do you want the git policy reference? It carries the push guardrails, generalized commit-requirement guidance, and the protocol for a failed git operation. (recommended: **yes**)
+When the policy is already adopted, the recommended answer keeps it as recorded: the file and Push line stay unless the user answers differently or adopts a drift diff. When it was declined before (no `### Git operations` sub-block and no file), this is the same question re-offered: a decline writes nothing and leaves no record, so the next run asks again.
 
-When the policy is already adopted, the recommended answer keeps it: the file stays unless the user answers differently or adopts a drift diff. When it was declined before (no `### Git operations` sub-block and no file), this is the same question re-offered: a decline writes nothing and leaves no record, so the next run asks again.
-
-On **no**, write nothing: omit the `### Git operations` sub-block and don't create `docs/agents/git-operations.md`. On **yes**, ask one more question:
-
-> May agents push to the remote on their own? (recommended: **no**)
-
-On **no** (the default), write the seed as-is: agents never push on their own; the maintainer pushes, or explicitly asks for it. On **yes**, replace the seed's Push line with what the user allowed, including any conditions they state (e.g. "only feature branches"). On a re-run, the recorded push answer is the recommended one, and keeping it leaves the Push line and any maintainer recordings untouched; changing it rewrites the Push line from the new answer. Skip the push question only when the repo has no remote; keep the default and say so. The other guardrails (force push, shared-history rewrites) ship as defaults in the seed; don't ask about each one - point the user at the file to edit them later.
+On **no** to the policy, write nothing: omit the `### Git operations` sub-block and don't create `docs/agents/git-operations.md`. On **yes**, the push answer from the same reply decides the Push line: **no** (the default) writes the seed as-is - agents never push on their own; the maintainer pushes, or explicitly asks for it; **yes** replaces the seed's Push line with what the user allowed, including any conditions they state (e.g. "only feature branches"). On a re-run, the recorded push answer is the recommended one, and keeping it leaves the Push line and any maintainer recordings untouched; changing it rewrites the Push line from the new answer. Omit the push sub-question when the repo has no remote; keep the default and say so. The other guardrails (force push, shared-history rewrites) ship as defaults in the seed; don't ask about each one - point the user at the file to edit them later.
 
 The "Commit requirements" section ships generalized, never prefilled from the setup machine's git config: requirements sit with each maintainer's machine, so one maintainer's signing setup does not describe another's. If the repo enforces something for everyone (branch protection demanding signed commits, a CI sign-off check), the maintainer records it in the file later. Step 3 shows the draft, so the user can correct it before anything is written.
 
@@ -205,4 +199,4 @@ Report what was kept, what changed, what was created, what was preserved, and ho
 - Unmanaged content untouched: `git status` shows changes only at the expected paths.
 - Every conflict, drift offer, and newly managed artifact got an explicit resolution from the user.
 
-Close by noting that re-running this skill at any time repeats the walk with the recorded answers as the defaults, and that skill updates come from the skills CLI: after an update, run this skill again to bring the configuration level with the new seeds.
+Close by noting that re-running this skill at any time repeats the same batched questions with the recorded answers as the defaults, and that skill updates come from the skills CLI: after an update, run this skill again to bring the configuration level with the new seeds.
