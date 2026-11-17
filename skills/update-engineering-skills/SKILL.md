@@ -15,7 +15,7 @@ Run this in the fork repository (chrisdigity/skills), where skills/ holds the so
 
 The ledger at docs/divergences.md is the contract: every live divergence is named there with its reason. This skill never introduces an undocumented divergence: a difference ends the run adopted, defended by a ledger entry, or undone. In a consuming repo (no skills/ directory at the root) there is nothing to import into: say so and stop.
 
-This is the fork-side counterpart to update-agent-docs, which refreshes consuming repos from this fork after the user commits and pushes.
+This is the fork-side counterpart to setup-agent-docs's maintenance role: consuming repos refresh from this fork with the skills CLI after the user commits and pushes, then re-run /setup-agent-docs to bring the configuration level.
 
 ## Process
 
@@ -38,7 +38,7 @@ Pair every folder in skills/ with its upstream counterpart in docs/tmp/.agents/s
 
 Sort the unpaired folders:
 
-- Fork-only (currently update-agent-docs and update-engineering-skills): fork-authored, no diff.
+- Fork-only (currently update-engineering-skills): fork-authored, no diff.
 - Upstream-only: a new upstream skill, an import candidate the user decides on.
 - A carried skill missing upstream entirely: upstream removed it; the user decides whether the fork maintains it from here on (record that in the ledger) or drops it.
 
@@ -89,4 +89,4 @@ Report what was imported, defended, undone, and adopted, and the ledger's new st
 - The ledger's stamp names this import's upstream commit and date.
 - git status shows changes only under skills/, docs/divergences.md, and README.md.
 
-Then note the handoff: consuming repos pick the import up with `npx skills update` followed by /update-agent-docs; in this repo, refresh the test install with `npx skills add chrisdigity/skills` so .agents/skills mirrors sources.
+Then note the handoff: consuming repos pick the import up with `npx skills update` followed by /setup-agent-docs; in this repo, refresh the test install with `npx skills add chrisdigity/skills` so .agents/skills mirrors sources.

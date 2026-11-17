@@ -1,5 +1,5 @@
 interface:
-  display_name: "Setup Engineering Skills"
-  short_description: "Configure a repo for the engineering skills"
+  display_name: "Setup Agent Docs"
+  short_description: "Configure or reconfigure a repo's engineering-skills setup"
 policy:
   allow_implicit_invocation: false

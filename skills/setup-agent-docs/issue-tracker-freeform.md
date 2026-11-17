@@ -2,7 +2,7 @@
 
 Issues for this repo are tracked by the workflow described below, in the user's own words. The skills follow this description literally.
 
-This file is filled in from the user's description at setup; `update-agent-docs` preserves that text and raises conflicts rather than regenerating it.
+This file is filled in from the user's description at setup; re-runs preserve that text, replacing it only when the user re-dictates their workflow in Section A.
 
 ## The workflow
 

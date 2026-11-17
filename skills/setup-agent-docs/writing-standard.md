@@ -1,4 +1,4 @@
-<!-- writing-standard v2: managed block. setup-agent-docs writes this; update-agent-docs replaces it in place; hand edits are overwritten. Wording changes ship only after an approved change list. -->
+<!-- writing-standard v2: managed block. setup-agent-docs writes this and replaces it in place on re-runs; hand edits are overwritten. Wording changes ship only after an approved change list. -->
 
 ## Response and writing standard
 This standard applies to all agent output: chat responses, research summaries, technical explanations, specs, tickets, glossary entries, ADRs, and repo documentation. It adapts patterns from Wikipedia's *Signs of AI Writing* field guide to eliminate machine-learning stylistic regressions.

@@ -8,7 +8,7 @@ Language for this repository: a fork of Matt Pocock's engineering skills, restru
 The subsystem that carries the skill set from upstream through this fork into installed projects: packaging and layout, install through the skills CLI, and the divergence list governing upstream derivation. Spec: docs/specs/skills-distribution.md.
 
 **project configuration**:
-The subsystem that configures a repository to run the workflow and keeps that configuration current: the managed artifacts and steering-file blocks that setup-agent-docs writes and update-agent-docs migrates. Spec: docs/specs/project-configuration.md.
+The subsystem that configures a repository to run the workflow and keeps that configuration current: the managed artifacts and steering-file blocks that setup-agent-docs writes and migrates. Spec: docs/specs/project-configuration.md.
 
 **work lifecycle**:
 The subsystem that moves work from proposal to durable documentation: the tracker, promotion and distillation, code review, triage, and research. Spec: docs/specs/work-lifecycle.md.
@@ -57,10 +57,10 @@ _Avoid_: scratchpad
 Dedup records at docs/out-of-scope/: one file per rejected enhancement concept with its prior requests; triage reads it before evaluating new requests, and an entry that passes the ADR bar graduates to docs/adr/ and leaves the KB.
 
 **managed artifact**:
-A file update-agent-docs owns and regenerates: docs/agents/*.md and the steering file's two managed blocks (the agent-skills block and the writing-standard block), plus the .gitignore entry for the disposable docs directory, which update verifies for presence rather than regenerating; everything else under docs/ is unmanaged and preserved as-is.
+A file setup-agent-docs owns and regenerates: docs/agents/*.md and the steering file's two managed blocks (the agent-skills block and the writing-standard block), plus the .gitignore entry for the disposable docs directory, which the skill verifies for presence rather than regenerating; everything else under docs/ is unmanaged and preserved as-is.
 
 **seed**:
-The template file in the setup-agent-docs folder that a managed artifact is generated from; update classifies each managed artifact against the latest seed and regenerates byte-identical copies of it.
+The template file in the setup-agent-docs folder that a managed artifact is generated from; the skill classifies each managed artifact against the installed seed and regenerates byte-identical copies of it.
 
 ## Distribution
 
@@ -78,4 +78,4 @@ _Avoid_: template repo
 The always-loaded agent instruction file in a repo: AGENTS.md, or CLAUDE.md where that is what already exists.
 
 **writing standard**:
-The versioned block in the steering file governing how all agent output reads; setup-agent-docs writes it, update-agent-docs replaces it in place.
+The versioned block in the steering file governing how all agent output reads; setup-agent-docs writes it and replaces it in place on re-runs.
