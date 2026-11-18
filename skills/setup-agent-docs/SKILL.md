@@ -11,7 +11,7 @@ Configure the per-repo configuration that the engineering skills assume, and re-
 - **Issue tracker**: where issues live (local markdown under `docs/tasks/` by default; GitHub, GitLab, and freeform workflows also supported)
 - **Triage labels**: the strings used for the five canonical triage roles
 - **Domain docs**: where the glossary and ADRs live, and the rules for reading them
-- **Research and disposable docs**: where research lands (`docs/research/`) and where disposable working files go (gitignored `docs/tmp/`)
+- **Research and disposable docs**: research as untracked working files in gitignored `docs/tmp/` until a feature adopts them into its `research/` directory
 - **Git**: what git operations agents may perform (pushing defaults to never on their own), and the protocol for a failed git operation
 - **Writing standard**: the always-loaded block in the steering file that governs how all agent output reads
 
@@ -160,7 +160,7 @@ The block:
 
 ### Research docs
 
-Research lives under `docs/research/`, one file per topic. Cross-reference files as `docs/research/<topic>` in ADRs, specs, and tickets.
+Research is working material: unadopted findings live in gitignored `docs/tmp/<topic>.md`; to-spec moves research a feature consumes into `docs/tasks/<feature>/research/<topic>.md`, and cleanup removes it with the feature's state. Distill anything durable into the glossary or an ADR; durable documents never reference research by path.
 
 ### Disposable docs
 

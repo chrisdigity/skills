@@ -1,6 +1,6 @@
 # chrisdigity/skills
 
-Engineering skills for AI coding agents, adapted from [mattpocock/skills](https://github.com/mattpocock/skills) to suit alternate preferences. The `docs/` directory carries the whole agent workflow (tracker, specs, glossary, ADRs, research, rejected-request knowledge base), committed alongside the skills.
+Engineering skills for AI coding agents, adapted from [mattpocock/skills](https://github.com/mattpocock/skills) to suit alternate preferences. The `docs/` directory carries the whole agent workflow (tracker, glossary, ADRs, rejected-request knowledge base), committed alongside the skills.
 
 ## Install
 
@@ -16,6 +16,8 @@ npx skills@latest add chrisdigity/skills
 
 - Engineering: ask-skills, code-review, codebase-design, diagnosing-bugs, domain-modeling, grill-with-docs, implement, implement-spec, improve-codebase-architecture, pr, prototype, research, retro, setup-agent-docs, tdd, to-spec, to-tickets, triage, wayfinder, wizard
 - Productivity: grill-me, grilling, handoff, teach, to-questionnaire, wait-what, writing-for-agents
+
+Two fork-authored skills ship with the set: `cleanup` removes finished features' local tracker state, and `update-engineering-skills` serves this repository's maintenance and is excluded from default installs.
 
 Each skill folder holds its SKILL.md plus its reference files, scripts, and agent metadata. Skill descriptions live in each SKILL.md and in upstream's README.
 

@@ -2,25 +2,14 @@
 
 Language for this repository: a fork of Matt Pocock's engineering skills, restructured so the docs/ directory carries the whole agent workflow.
 
-## Subsystems
-
-**skills distribution**:
-The subsystem that carries the skill set from upstream through this fork into installed projects: packaging and layout, install through the skills CLI, and the divergence list governing upstream derivation. Spec: docs/specs/skills-distribution.md.
-
-**project configuration**:
-The subsystem that configures a repository to run the workflow and keeps that configuration current: the managed artifacts and steering-file blocks that setup-agent-docs writes and migrates. Spec: docs/specs/project-configuration.md.
-
-**work lifecycle**:
-The subsystem that moves work from proposal to durable documentation: the tracker, promotion and distillation, code review, triage, and research. Spec: docs/specs/work-lifecycle.md.
-
 ## Work in the tracker
 
 **tracker**:
-The local issue tracker at docs/tasks/, committed to git; it holds every feature spec and ticket until promotion or rejection.
+The local issue tracker at docs/tasks/, committed to git; it holds every feature's spec, tickets, and research until cleanup or rejection.
 _Avoid_: scratchpad, wip
 
 **feature spec**:
-The proposal document at docs/tasks/<feature>/spec.md, written by to-spec; it describes one feature's problem, user stories, and implementation decisions, and dies at promotion.
+The proposal document at docs/tasks/<feature>/spec.md, written by to-spec; it describes one feature's problem, user stories, and implementation decisions, and is removed by cleanup when the feature finishes.
 _Avoid_: wip spec, spec
 
 **ticket**:
@@ -30,27 +19,17 @@ _Avoid_: task, issue
 **wayfinding**:
 The map-and-ticket system wayfinder runs over the tracker: a map file with one child ticket per question, claimed and resolved by status, with the frontier listing open, unblocked, unclaimed tickets.
 
-**promotion**:
-The close-out step that distills a completed feature into the durable docs; part of the feature's definition of done, checked by code-review.
-_Avoid_: archive
-
-**distillation**:
-The routing rule promotion follows: behavior goes into the matching subsystem spec, hard-to-reverse decisions go into docs/adr/, new terms go into the glossary; everything else dies with the feature's directory.
+**cleanup**:
+The skill that removes finished work's state from the tracker: a feature directory removed wholesale once all its tickets resolve, its research included; git history retains what the workspace drops, and the glossary and ADRs written along the way are the durable record.
+_Avoid_: promotion, archive
 
 ## Reference docs
 
-**subsystem spec**:
-A current-state design intent document for one subsystem at docs/specs/<subsystem>.md; mutable, describing behavior as of the last promotion.
-_Avoid_: spec
-
-**precedence**:
-When sources disagree: code and tests show what is, subsystem specs show what should be, the tracker shows what is proposed; surface the conflict rather than resolving it silently.
-
 **research doc**:
-A point-in-time, cited findings file at docs/research/<topic>.md; it is never promoted into a spec without re-verification.
+A point-in-time, cited findings file. Unadopted research is an untracked working file at docs/tmp/<topic>.md; research a feature consumes moves into docs/tasks/<feature>/research/ and is removed with the feature's state. Durable documents receive distilled findings, never research paths.
 
 **disposable docs**:
-Working files at docs/tmp/ that exist only for the current task: drafts, temp notes, and the upstream import's comparison install. Gitignored, deleted without notice, never referenced by committed documents.
+Working files at docs/tmp/ that exist only for the current task: drafts, temp notes, unadopted research, and the upstream import's comparison install. Gitignored, deleted without notice, never referenced by committed documents.
 _Avoid_: scratchpad
 
 **rejected-request KB**:

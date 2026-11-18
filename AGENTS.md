@@ -11,7 +11,7 @@ Issues are tracked as local markdown files under `docs/tasks/<feature>/` in this
 Default canonical triage labels (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`). See `docs/agents/triage-labels.md`.
 
 ### Research docs
-Research lives under `docs/research/`, one file per topic. Cross-reference files as `docs/research/<topic>` in ADRs, specs, and tickets.
+Research is working material: unadopted findings live in gitignored `docs/tmp/<topic>.md`; to-spec moves research a feature consumes into `docs/tasks/<feature>/research/<topic>.md`, and cleanup removes it with the feature's state. Distill anything durable into the glossary or an ADR; durable documents never reference research by path.
 
 ### Disposable docs
 Disposable working files (drafts, temp notes, scratch comparisons) go in gitignored `docs/tmp/`. Nothing committed references a `docs/tmp/` path.

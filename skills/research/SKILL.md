@@ -1,6 +1,6 @@
 ---
 name: research
-description: Investigate a question against high-trust primary sources and capture the findings as a Markdown file in the repo. Use when the user wants a topic researched, docs or API facts gathered, or reading legwork delegated to a background agent.
+description: Investigate a question against high-trust primary sources and capture the findings as a Markdown file. Use when the user wants a topic researched, docs or API facts gathered, or reading legwork delegated to a background agent.
 ---
 
 Spin up a **background agent** to do the research, so you keep working while it reads. Start it with a fresh context window.
@@ -8,5 +8,6 @@ Spin up a **background agent** to do the research, so you keep working while it 
 Its job:
 
 1. Investigate the question against **primary sources** (official docs, source code, specs, first-party APIs), not a secondary write-up of them. Follow every claim back to the source that owns it.
-2. Write the findings to a single Markdown file, citing each claim's source.
-3. Save it to `docs/research/<topic>.md`, one file per topic (create the directory if it doesn't exist), date it, and say where you saved it: the findings are point-in-time, so a reader knows to re-verify them before relying on them.
+2. Write the findings to a single Markdown file, citing each claim's source, and date it.
+3. Save it where its consumer lives: research serving a feature or effort in the tracker goes in that directory's `research/` subdirectory as `<topic>.md`; research tied to nothing yet goes to gitignored `docs/tmp/<topic>.md`, disposable like the rest of `docs/tmp/`. Say where you saved it: the findings are point-in-time, so a reader knows to re-verify them before relying on them.
+4. Anything a durable document (the glossary, an ADR) needs from the findings is distilled into that document; durable documents never reference research by path. The file itself is removed by `/cleanup` with the feature it served, or by the usual fate of `docs/tmp/` if nothing ever adopts it.
