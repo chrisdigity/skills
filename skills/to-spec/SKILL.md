@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 This skill takes the current conversation context and codebase understanding and produces a spec. Do NOT interview the user; just synthesize what you already know.
 
-The issue tracker and triage label vocabulary should have been provided to you. If not, tell the user to run `/setup-agent-docs`.
+The issue tracker and triage label vocabulary should have been provided to you (the repo's `docs/agents/` files or the conversation). If not, use the **fallback root**: a stand-in repository root in the OS temp directory at `%TEMP%/<repo-slug>/` (`$TMPDIR`, else `/tmp`; `%TEMP%` on Windows; the slug is `<owner>-<repo>` from the git remote when one exists, else the checkout directory's name), with a local markdown tracker under it at `docs/tasks/` and the default triage label vocabulary. Every `docs/` convention reads under the fallback root; write nothing into the real repo. State the fallback path to the user. The fallback root is disposable - the OS may clear it, so confirm it exists at session start and never treat it as durable.
 
 ## Process
 
@@ -73,3 +73,5 @@ A description of the things that are out of scope for this spec.
 Any further notes about the feature.
 
 </spec-template>
+
+4. Advise on tickets. Estimate how many vertical slices the spec implies: clusters of user stories that are each demoable end-to-end and buildable independently, each sized to fit a fresh context window. If the spec implies more than one, recommend running `/to-tickets` before any implementation. If it implies one, say the spec is ready for `/implement` as-is. Advice only: the user decides.

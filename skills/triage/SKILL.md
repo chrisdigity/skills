@@ -40,7 +40,7 @@ For a PR, the same states read against the attached code: `ready-for-agent` mean
 
 Every triaged issue should carry exactly one category role and one state role. If state roles conflict, flag it and ask the maintainer before doing anything else.
 
-These are canonical role names. The actual label strings used in the issue tracker may differ. The mapping should have been provided to you. If not, tell the user to run `/setup-agent-docs`.
+These are canonical role names. The actual label strings used in the issue tracker may differ. The mapping and the tracker location should have been provided to you (the repo's `docs/agents/` files or the conversation). If not, use the **fallback root**: a stand-in repository root in the OS temp directory at `%TEMP%/<repo-slug>/` (`$TMPDIR`, else `/tmp`; `%TEMP%` on Windows; the slug is `<owner>-<repo>` from the git remote when one exists, else the checkout directory's name), with a local markdown tracker under it at `docs/tasks/` and the default triage label vocabulary (each canonical role name above used as the label string). Every `docs/` convention reads under the fallback root - the rejected-request KB at `docs/out-of-scope/` included; write nothing into the real repo. State the fallback path to the user. The fallback root is disposable - the OS may clear it, so confirm it exists at session start and never treat it as durable.
 
 State transitions: an unlabeled issue normally goes to `needs-triage` first; from there it moves to `needs-info`, `ready-for-agent`, `ready-for-human`, or `wontfix`. `needs-info` returns to `needs-triage` once the reporter replies. The maintainer can override at any time; flag transitions that look unusual and ask before proceeding.
 

@@ -10,7 +10,7 @@ Two-axis review of the diff between `HEAD` and a fixed point the user supplies:
 
 Both axes run as **parallel sub-agents** so they don't pollute each other's context, then this skill aggregates their findings. Start every sub-agent with a fresh context window.
 
-The issue tracker should have been provided to you. If not, tell the user to run `/setup-agent-docs`.
+The issue tracker should have been provided to you (the repo's `docs/agents/issue-tracker.md` or the conversation). If not, use the **fallback root**: a stand-in repository root in the OS temp directory at `%TEMP%/<repo-slug>/` (`$TMPDIR`, else `/tmp`; `%TEMP%` on Windows; the slug is `<owner>-<repo>` from the git remote when one exists, else the checkout directory's name), with a local markdown tracker under it at `docs/tasks/`. Every `docs/` convention reads under the fallback root; write nothing into the real repo. State the fallback path to the user. The fallback root is disposable - the OS may clear it, so confirm it exists at session start and never treat it as durable.
 
 ## Process
 

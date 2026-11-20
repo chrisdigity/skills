@@ -5,7 +5,7 @@ description: Remove finished features' local tracker state - the feature directo
 
 Finished work leaves state behind: the spec that proposed it, the tickets that drove it, the comments and research that fed it. The durable record is the glossary and the ADRs written along the way; git history retains whatever the workspace drops. This skill removes the state.
 
-The issue tracker config should have been provided to you. If not, tell the user to run `/setup-agent-docs`. On a hosted tracker (GitHub, GitLab, ...) the tracker's state lives on the host and there is no local state to remove: report that and stop.
+The issue tracker config should have been provided to you (the repo's `docs/agents/issue-tracker.md` or the conversation). If not, use the **fallback root**: a stand-in repository root in the OS temp directory at `%TEMP%/<repo-slug>/` (`$TMPDIR`, else `/tmp`; `%TEMP%` on Windows; the slug is `<owner>-<repo>` from the git remote when one exists, else the checkout directory's name), with a local markdown tracker under it at `docs/tasks/`. Every `docs/` convention reads under the fallback root; write nothing into the real repo. State the fallback path to the user. The fallback root is disposable - the OS may clear it, so confirm it exists at session start; its state is outside git, so removal there is final, guarded by the containment check and the standalone confirmation. On a hosted tracker (GitHub, GitLab, ...) the tracker's state lives on the host and there is no local state to remove: report that and stop.
 
 ## What it removes
 
