@@ -22,18 +22,16 @@ A failed commit or push is not always a repo defect: as described above, the fai
 When a commit or push fails with an error about signing, passphrases, agents, credentials, or hooks:
 
 1. Read the error, then stop. Do not disable the requirement (no `--no-gpg-sign`, no `--no-verify`), do not edit signing or pinentry configuration, and do not restart gpg or credential agents: a restart flushes whatever the maintainer has cached.
-2. Classify the failure from the error text before reporting anything; the class decides the remedy, and a remedy from another class does not apply:
-   - **Locked key**: the key and its configuration are fine; the key is waiting to be unlocked. Signs: a prompt or a hang, a passphrase or PIN request, `bad passphrase`, `Inappropriate ioctl for device`. Remedy: the maintainer's passphrase or PIN entry ritual (step 4).
-   - **Configuration defect**: signing is set up wrong on this machine, typically after a recent configuration change. Signs: `cannot open 'no tty'` and other no-tty failures in a non-interactive session, `secret key not available`, a missing or unusable pinentry program, gpg itself not found. Remedy: the maintainer reviews and repairs or reverts their configuration; the step 4 ritual does not apply.
-   - **Remote or credential**: a push the remote or its authentication rejected. Remedy: the maintainer re-authenticates in their own terminal or browser.
-   - **Repository state**: branch protection, a hook, or an in-progress merge rejected the operation. Remedy: ordinary repository work, not machine repair.
-   An error matching no class is reported unclassified: quote it and wait for the maintainer.
-3. Report before diagnosing further: the command that failed, the exact error text, the class with the evidence for it, and the remedy the class calls for. Ask permission before investigating the cause; never offer a remedy from a class the evidence does not support.
-4. With permission, offer the class's remedy; perform nothing on the maintainer's machine yourself. For a locked key, the ritual - run by the maintainer in their own terminal:
+2. Classify the failure from the error text before reporting anything. Two classes carry a remedy; everything else is unclassified:
+   - **Locked key**: the key is waiting to be unlocked. Signs: a prompt or a hang, a passphrase or PIN request, `bad passphrase`, `Inappropriate ioctl for device`. Remedy: the maintainer's passphrase or PIN entry ritual (step 4). A failure that never asks for anything - gpg erroring out immediately, a missing tool - is never a locked key.
+   - **Credentials** (pushes): the remote rejected the authentication. Signs: `Authentication failed`, `could not read Username`, HTTP 401 from the remote. Remedy: the maintainer re-authenticates in their own terminal or browser.
+   - **Unclassified**: everything else, whatever the suspicion the error text raises. Report it and wait: the maintainer diagnoses the cause. The agent offers no remedy and asserts no cause, however plausible it looks - a plausible cause read off an error message is a guess about a machine the agent cannot see.
+3. Report before diagnosing further: the command that failed, the exact error text, and, for a classified failure, the class with the evidence for it. Ask permission before investigating the cause; never offer a remedy the evidence does not support.
+4. With permission, offer the remedy for a classified failure; perform nothing on the maintainer's machine yourself. For a locked key, the ritual - run by the maintainer in their own terminal:
 
    ```
    echo | gpg --clear-sign
    ```
 
-   prompts for the key's passphrase or PIN and caches it, unblocking signed commits for a period of time. For a remote or credential failure, the maintainer re-authenticates in their own terminal or browser.
-5. Retry the operation unchanged once the maintainer confirms the requirement is satisfied. If the maintainer's answer contradicts the classification, reclassify, report again, and wait: a misread class is a diagnosis to correct, not an instruction to push through.
+   prompts for the key's passphrase or PIN and caches it, unblocking signed commits for a period of time. For a credential failure, the maintainer re-authenticates in their own terminal or browser.
+5. Retry the operation unchanged once the maintainer confirms the requirement is satisfied. If the maintainer's diagnosis contradicts the classification, reclassify, report again, and wait: a misread class is a diagnosis to correct, not an instruction to push through.
